@@ -74,8 +74,6 @@ public class GameUI : MonoBehaviour
 
     public void HandleEndTurnButton()
     {
-        // todo: do stuff
-
-
+        FindObjectOfType<TurnManager>()?.HandleEndTurnButton();
     }
 }
