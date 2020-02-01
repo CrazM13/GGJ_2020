@@ -6,7 +6,7 @@ public class ActionsExecuteState : ITurnState {
 
 	public bool DidWin() {
 		// CHECK TILES
-		return false;
+		return true;
 	}
 
 	public bool IsDone() {

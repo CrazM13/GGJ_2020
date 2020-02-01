@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,16 +22,32 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	private void Start()
-	{
-		StartGame();
-	}
-
 	public void StartGame()
 	{
-		// SWITCH SCENES
-		GameNumber++;
-		TileManager.Instance.Generate(GameNumber + 3);
+		SceneManager.LoadSceneAsync(4).completed += (e) => {
+			GameNumber++;
+			TileManager.Instance.Generate(GameNumber + 3);
+		};
+	}
+
+	public void ShowUpgradeScreen()
+	{
+		SceneManager.LoadScene("UpgradeScreen");
+	}
+
+	public void ShowCreditScreen()
+	{
+		SceneManager.LoadScene("Credits");
+	}
+
+	public void ShowStatScreen()
+	{
+		SceneManager.LoadScene("StatsScreen");
+	}
+
+	public void QuitToMenu()
+	{
+		SceneManager.LoadScene("MainMenu");
 	}
 
 }

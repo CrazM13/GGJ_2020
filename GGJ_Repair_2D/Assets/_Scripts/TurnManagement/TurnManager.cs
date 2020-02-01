@@ -33,7 +33,11 @@ public class TurnManager : MonoBehaviour {
 		bool isDone = turnStates[turnStage].IsDone();
 
 		if (isDone) {
-			NextTurnStage();
+			if (turnStates[turnStage].DidWin()) {
+				GameManager.Instance.ShowUpgradeScreen();
+			} else {
+				NextTurnStage();
+			}
 		}
 	}
 
