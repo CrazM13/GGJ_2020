@@ -9,9 +9,9 @@ public class Unit : MonoBehaviour {
 
 	public int unitNumber = 0;
 
-	private List<UnitAction> actions;
+	private List<UnitAction> actions = new List<UnitAction>();
 
-	private int maxActions = 3;
+	private int remainingActions = 3;
 
 	private bool performingActions = false;
 
@@ -24,33 +24,45 @@ public class Unit : MonoBehaviour {
 	}
 
 	void Update() {
-		if (performingActions) {
-			if (actions.Count > 0) {
+
+		if (Input.GetMouseButtonDown(0)) {
+			TileManager.Instance.ClearDisaster(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+			//AddAction(new UnitAction(UnitAction.ActionType.MOVE, Camera.main.ScreenToWorldPoint(Input.mousePosition), UnitAction.ActionDirection.NONE));
+		}
+
+		if (Input.GetMouseButtonDown(1)) {
+			TileManager.Instance.ClearDisaster(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+			//AddAction(new UnitAction(UnitAction.ActionType.FIX, Input.mousePosition, UnitAction.ActionDirection.NONE));
+		}
+
+		if (actions.Count > 0) {
 				
-				actionTimer += Time.deltaTime;
+			actionTimer += Time.deltaTime;
 
-				switch(actions[0].GetActionType()) {
-					case UnitAction.ActionType.FIX:
-
-						break;
-					case UnitAction.ActionType.MOVE:
-						transform.position = Vector2.Lerp(startPosition, actions[0].GetActionTarget(), actionTimer / ACTION_TIME);
-						break;
-				}
-
-				if (actionTimer >= ACTION_TIME) {
-					actionTimer = 0;
-					actions.RemoveAt(0);
-				}
-
-			} else {
-				performingActions = false;
+			switch(actions[0].GetActionType()) {
+				case UnitAction.ActionType.FIX:
+					//if (actionTimer >= ACTION_TIME) {
+					Debug.Log($"{Camera.main.ScreenToWorldPoint(Input.mousePosition)}");
+						TileManager.Instance.ClearDisaster(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+					//}
+					break;
+				case UnitAction.ActionType.MOVE:
+					transform.position = Vector2.Lerp(startPosition, actions[0].GetActionTarget(), actionTimer / ACTION_TIME);
+					break;
 			}
+
+			if (actionTimer >= ACTION_TIME) {
+				startPosition = transform.position;
+				actionTimer = 0;
+				actions.RemoveAt(0);
+			}
+
 		}
 	}
 
 	public void AddAction(UnitAction action) {
-		if (actions.Count >= maxActions) return;
+		if (remainingActions <= 0) return;
+		remainingActions--;
 		// SET UI
 
 		actions.Add(action);
@@ -60,7 +72,7 @@ public class Unit : MonoBehaviour {
 		do {
 			actions.RemoveAt(actions.Count - 1);
 			actionIndex++;
-		} while (actionIndex < maxActions);
+		} while (actionIndex < remainingActions);
 	}
 
 	public void ExecuteActions() {
@@ -68,7 +80,7 @@ public class Unit : MonoBehaviour {
 	}
 
 	public void SetActionCount(int maxActions) {
-		this.maxActions = maxActions;
+		this.remainingActions = maxActions;
 	}
 
 	public float GetFixChance(Vector2 target) {
