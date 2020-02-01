@@ -179,26 +179,35 @@ public class TileManager : MonoBehaviour
 	private List<Vector3> RandomizeDisasterLocations(int numDisasters)
 	{
 		List<Vector3> locs = new List<Vector3>();
-		int centerGridWidthRange = GRID_WIDTH / 2 - 1;
-		int centerGridHeightRange = GRID_HEIGHT / 2 + 1;
+		int minX = Mathf.CeilToInt(GRID_WIDTH / 2f) - 1;
+		int maxX = Mathf.CeilToInt(GRID_WIDTH / 2f) + 1;
+		int minY = Mathf.CeilToInt(GRID_HEIGHT / 2f) - 1;
+		int maxY = Mathf.CeilToInt(GRID_HEIGHT / 2f) + 1;
 		
 		for (int i = 0; i < numDisasters; i++)
 		{
 			int x = 0;
 			int y = 0;
 
-			bool success = false;
-			while (!success)
+			bool success = true;
+			do
 			{
 				x = Random.Range(0, GRID_WIDTH);
 				y = Random.Range(0, GRID_HEIGHT);
+				Vector3 newLoc = new Vector3(x, y, 0f);
 
-				if (x < centerGridWidthRange || x > centerGridWidthRange &&
-					y < centerGridHeightRange || y > centerGridHeightRange)
+				if ((x >= minX && x <= maxX) &&
+					(y >= minY && y <= maxY) &&
+					!locs.Contains(newLoc))
+				{
+					success = false;
+				}
+				else
 				{
 					success = true;
 				}
-			}
+
+			} while (!success);
 
 			locs.Add(new Vector3(x, y, 0f));
 		}

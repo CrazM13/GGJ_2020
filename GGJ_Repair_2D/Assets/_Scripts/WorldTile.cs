@@ -16,7 +16,6 @@ public class WorldTile
 	//public TileManager.TileTypes type = TileManager.TileTypes.Empty;
 	public DisasterTypes type = DisasterTypes.Count;	// Treat Count as none (i.e. empty tile)
 	public int isOccupiedByUnit = -1;
-	public int willBeOccupiedByUnit = -1;	// So we can flag a tile as not currently occupied, but a unit wants to move here during the planning phase.
 
 	Dictionary<TileDirections, WorldTile> adjacentTiles = new Dictionary<TileDirections, WorldTile>();
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
@@ -75,5 +76,10 @@ public class GameUI : MonoBehaviour
     public void HandleEndTurnButton()
     {
         FindObjectOfType<TurnManager>()?.HandleEndTurnButton();
+    }
+
+    public void HandleMainMenuButton()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
