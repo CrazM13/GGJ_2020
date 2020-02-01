@@ -179,11 +179,28 @@ public class TileManager : MonoBehaviour
 	private List<Vector3> RandomizeDisasterLocations(int numDisasters)
 	{
 		List<Vector3> locs = new List<Vector3>();
-
-		// TODO: Actually randomize this
+		int centerGridWidthRange = GRID_WIDTH / 2 - 1;
+		int centerGridHeightRange = GRID_HEIGHT / 2 + 1;
+		
 		for (int i = 0; i < numDisasters; i++)
 		{
-			locs.Add(new Vector3(i, 0f, 0f));
+			int x = 0;
+			int y = 0;
+
+			bool success = false;
+			while (!success)
+			{
+				x = Random.Range(0, GRID_WIDTH);
+				y = Random.Range(0, GRID_HEIGHT);
+
+				if (x < centerGridWidthRange || x > centerGridWidthRange &&
+					y < centerGridHeightRange || y > centerGridHeightRange)
+				{
+					success = true;
+				}
+			}
+
+			locs.Add(new Vector3(x, y, 0f));
 		}
 
 		return locs;
