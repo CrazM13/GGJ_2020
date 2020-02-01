@@ -11,7 +11,7 @@ public class Unit : MonoBehaviour {
 
 	private List<UnitAction> actions = new List<UnitAction>();
 
-	private int remainingActions = 3;
+	private int remainingActions = 4;
 
 	private bool performingActions = false;
 
@@ -25,26 +25,19 @@ public class Unit : MonoBehaviour {
 
 	void Update() {
 
-		if (Input.GetMouseButtonDown(0)) {
-			TileManager.Instance.ClearDisaster(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-			AddAction(new UnitAction(UnitAction.ActionType.MOVE, Camera.main.ScreenToWorldPoint(Input.mousePosition), UnitAction.ActionDirection.NONE));
-		}
-
-		if (Input.GetMouseButtonDown(1)) {
-			AddAction(new UnitAction(UnitAction.ActionType.FIX, Camera.main.ScreenToWorldPoint(Input.mousePosition), UnitAction.ActionDirection.NONE));
-		}
-
 		if (actions.Count > 0) {
-				
-			actionTimer += Time.deltaTime;
 
 			switch(actions[0].GetActionType()) {
 				case UnitAction.ActionType.FIX:
-					if (actionTimer >= ACTION_TIME) {
-						TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
+					if (performingActions) {
+						actionTimer += Time.deltaTime;
+						if (actionTimer >= ACTION_TIME) {
+							TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
+						}
 					}
 					break;
 				case UnitAction.ActionType.MOVE:
+					actionTimer += Time.deltaTime;
 					transform.position = Vector2.Lerp(startPosition, actions[0].GetActionTarget(), actionTimer / ACTION_TIME);
 					break;
 			}
@@ -66,13 +59,6 @@ public class Unit : MonoBehaviour {
 		actions.Add(action);
 	}
 
-	public void RemoveAction(int actionIndex) {
-		do {
-			actions.RemoveAt(actions.Count - 1);
-			actionIndex++;
-		} while (actionIndex < remainingActions);
-	}
-
 	public void ExecuteActions() {
 		performingActions = true;
 	}
@@ -85,6 +71,14 @@ public class Unit : MonoBehaviour {
 		// CHECK TYPE
 		int level = 0;// GET CHANCE FROM STATIC STATS
 		return BASE_FIX_CHANCE + ((float)level * 2 / 100f) + ((float)remainingActions * 2 / 100f);
+	}
+
+	public int GetRemainingActions() {
+		return remainingActions;
+	}
+
+	public bool AreActionsComplete() {
+		return actions.Count == 0;
 	}
 
 }
