@@ -15,9 +15,8 @@ public class WorldTile
     //public GameObject gameObject;
 	//public TileManager.TileTypes type = TileManager.TileTypes.Empty;
 	public DisasterTypes type = DisasterTypes.Count;	// Treat Count as none (i.e. empty tile)
-	public Vector3Int cellLocation;
-	public bool isOccupiedByUnit = false;
-	public bool willBeOccupiedByUnit = false;	// So we can flag a tile as not currently occupied, but a unit wants to move here during the planning phase.
+	public int isOccupiedByUnit = -1;
+	public int willBeOccupiedByUnit = -1;	// So we can flag a tile as not currently occupied, but a unit wants to move here during the planning phase.
 
 	Dictionary<TileDirections, WorldTile> adjacentTiles = new Dictionary<TileDirections, WorldTile>();
 
@@ -31,10 +30,9 @@ public class WorldTile
 	//	}
 	//}
 
-	public WorldTile(DisasterTypes type, Vector3Int loc)
+	public WorldTile(DisasterTypes type)
 	{
 		this.type = type;
-		cellLocation = loc;
 	}
 
 	public void SetAdjacentTile(TileDirections dir, WorldTile tile)

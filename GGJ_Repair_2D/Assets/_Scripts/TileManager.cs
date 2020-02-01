@@ -54,6 +54,18 @@ public class TileManager : MonoBehaviour
 		disasterTiles.Add(DisasterTypes.Disease, Resources.Load<TileBase>("Tiles/DiseaseTile"));
 	}
 
+	private void Update()
+	{
+		//if (Input.GetMouseButtonDown(0))
+		//{
+		//	Vector3 worldLoc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		//	Vector3Int clickedTilePos = tilemap.WorldToCell(worldLoc);
+		//	TileBase clickedTile = tilemap.GetTile(clickedTilePos);
+		//	Debug.Log("Clicked " + clickedTile);
+		//	tilemap.SetTile(clickedTilePos, disasterTiles[DisasterTypes.Disease]);
+		//}
+	}
+
 	[ContextMenu("TestGenerateMap")]
 	public void TestGenerate()
 	{
@@ -105,7 +117,7 @@ public class TileManager : MonoBehaviour
 
 				Vector3Int cellLoc = new Vector3Int(x, y, 0);
 				tilemap.SetTile(cellLoc, tileToSpawn);
-				tiles[x, y] = new WorldTile(type, cellLoc);
+				tiles[x, y] = new WorldTile(type);
 			}
 		}
 
@@ -156,9 +168,12 @@ public class TileManager : MonoBehaviour
 		return numDisasters;
 	}
 
-	public void ClearDisaster(Vector3 location)
+	public void ClearDisaster(Vector3 worldLocation)
 	{
-
+		Vector3Int clickedTilePos = tilemap.WorldToCell(worldLocation);
+		TileBase clickedTile = tilemap.GetTile(clickedTilePos);
+		Debug.Log("Clearing " + clickedTile);
+		tilemap.SetTile(clickedTilePos, emptyTile);
 	}
 
 	private List<Vector3> RandomizeDisasterLocations(int numDisasters)
