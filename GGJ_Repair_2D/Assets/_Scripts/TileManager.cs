@@ -12,6 +12,8 @@ public class TileManager : MonoBehaviour
 		None		// To represent off the edge of the grid
 	}
 
+	public static TileManager Instance = null;
+
 	const int GRID_WIDTH = 9;
 	const int GRID_HEIGHT = 9;
 
@@ -22,12 +24,24 @@ public class TileManager : MonoBehaviour
 	Dictionary<DisasterTypes, TileBase> disasterTiles = new Dictionary<DisasterTypes, TileBase>();
 	//GameObject emptyTilePrefab;
 	//Dictionary<DisasterTypes, GameObject> disasterTilePrefabs = new Dictionary<DisasterTypes, GameObject>();
-	
 
 	Vector3 anchor = new Vector3(.5f, .5f, .5f);
 	int numDisasters = 0;
 
 	WorldTile[,] tiles = new WorldTile[GRID_WIDTH, GRID_HEIGHT];
+
+	private void Awake()
+	{
+		if (Instance == null)
+		{
+			Instance = this;
+		}
+		else
+		{
+			Destroy(Instance);
+			Instance = this;
+		}
+	}
 
 	private void Start()
 	{
