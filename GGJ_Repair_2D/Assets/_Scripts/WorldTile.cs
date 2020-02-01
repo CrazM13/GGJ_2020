@@ -15,7 +15,7 @@ public class WorldTile
     //public GameObject gameObject;
 	//public TileManager.TileTypes type = TileManager.TileTypes.Empty;
 	public DisasterTypes type = DisasterTypes.Count;	// Treat Count as none (i.e. empty tile)
-	public int isOccupiedByUnit = -1;
+	public int occupiedByUnit = -1;
 
 	Dictionary<TileDirections, WorldTile> adjacentTiles = new Dictionary<TileDirections, WorldTile>();
 
