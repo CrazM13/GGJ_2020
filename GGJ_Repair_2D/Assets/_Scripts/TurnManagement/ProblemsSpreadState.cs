@@ -14,7 +14,7 @@ public class ProblemsSpreadState : ITurnState {
 
 	public void Start() {
 		if (TurnManager.instance.TurnNumber % 3 == 0) {
-			// TODO: SPREAD PROBLEMS
+			// TODO
 		}
 	}
 
