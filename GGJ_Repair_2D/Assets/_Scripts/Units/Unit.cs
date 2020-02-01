@@ -81,4 +81,9 @@ public class Unit : MonoBehaviour {
 		return actions.Count == 0;
 	}
 
+	public void Kill() {
+		// TMP
+		gameObject.SetActive(false);
+	}
+
 }

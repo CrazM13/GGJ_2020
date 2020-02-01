@@ -41,6 +41,10 @@ public class UnitManager : MonoBehaviour {
 		return allComplete;
 	}
 
+	public void Kill(int unitNumber) {
+		units[unitNumber + 1].Kill();
+	}
+
 	private void OnDestroy() {
 		instance = null;
 	}
