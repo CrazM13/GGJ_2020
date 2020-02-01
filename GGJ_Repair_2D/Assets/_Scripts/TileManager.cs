@@ -221,14 +221,17 @@ public class TileManager : MonoBehaviour
 				}
 			}
 
-			int spreadTileIndex = Random.Range(0, possibleSpreadTiles.Count);
-			WorldTile spreadTile = possibleSpreadTiles[spreadTileIndex];
-			if (spreadTile != null)
+			if (possibleSpreadTiles.Count > 0)
 			{
-				spreadTile.type = tile.type;
-				spreadTile.justSpread = true;
-				tilemap.SetTile(spreadTile.cellLocation, disasterTiles[tile.type]);
-				numDisasters++;
+				int spreadTileIndex = Random.Range(0, possibleSpreadTiles.Count);
+				WorldTile spreadTile = possibleSpreadTiles[spreadTileIndex];
+				if (spreadTile != null)
+				{
+					spreadTile.type = tile.type;
+					spreadTile.justSpread = true;
+					tilemap.SetTile(spreadTile.cellLocation, disasterTiles[tile.type]);
+					numDisasters++;
+				}
 			}
 
 			possibleSpreadTiles.Clear();
