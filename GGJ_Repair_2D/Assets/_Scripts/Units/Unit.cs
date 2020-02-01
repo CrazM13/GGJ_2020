@@ -27,12 +27,11 @@ public class Unit : MonoBehaviour {
 
 		if (Input.GetMouseButtonDown(0)) {
 			TileManager.Instance.ClearDisaster(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-			//AddAction(new UnitAction(UnitAction.ActionType.MOVE, Camera.main.ScreenToWorldPoint(Input.mousePosition), UnitAction.ActionDirection.NONE));
+			AddAction(new UnitAction(UnitAction.ActionType.MOVE, Camera.main.ScreenToWorldPoint(Input.mousePosition), UnitAction.ActionDirection.NONE));
 		}
 
 		if (Input.GetMouseButtonDown(1)) {
-			TileManager.Instance.ClearDisaster(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-			//AddAction(new UnitAction(UnitAction.ActionType.FIX, Input.mousePosition, UnitAction.ActionDirection.NONE));
+			AddAction(new UnitAction(UnitAction.ActionType.FIX, Camera.main.ScreenToWorldPoint(Input.mousePosition), UnitAction.ActionDirection.NONE));
 		}
 
 		if (actions.Count > 0) {
@@ -41,10 +40,9 @@ public class Unit : MonoBehaviour {
 
 			switch(actions[0].GetActionType()) {
 				case UnitAction.ActionType.FIX:
-					//if (actionTimer >= ACTION_TIME) {
-					Debug.Log($"{Camera.main.ScreenToWorldPoint(Input.mousePosition)}");
-						TileManager.Instance.ClearDisaster(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-					//}
+					if (actionTimer >= ACTION_TIME) {
+						TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
+					}
 					break;
 				case UnitAction.ActionType.MOVE:
 					transform.position = Vector2.Lerp(startPosition, actions[0].GetActionTarget(), actionTimer / ACTION_TIME);
@@ -86,7 +84,7 @@ public class Unit : MonoBehaviour {
 	public float GetFixChance(Vector2 target) {
 		// CHECK TYPE
 		int level = 0;// GET CHANCE FROM STATIC STATS
-		return BASE_FIX_CHANCE + ((float)level * 2 / 100f);
+		return BASE_FIX_CHANCE + ((float)level * 2 / 100f) + ((float)remainingActions * 2 / 100f);
 	}
 
 }
