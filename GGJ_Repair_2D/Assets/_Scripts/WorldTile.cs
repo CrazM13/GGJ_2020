@@ -17,6 +17,7 @@ public class WorldTile
 	public DisasterTypes type = DisasterTypes.Count;	// Treat Count as none (i.e. empty tile)
 	public Vector3Int cellLocation;
 	public int occupiedByUnit = -1;
+	public bool justSpread = false;
 
 	public Dictionary<TileDirections, WorldTile> adjacentTiles = new Dictionary<TileDirections, WorldTile>();
 
