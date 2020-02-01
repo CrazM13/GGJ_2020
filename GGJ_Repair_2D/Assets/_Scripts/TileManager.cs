@@ -198,14 +198,47 @@ public class TileManager : MonoBehaviour
 		return tilemap.GetCellCenterWorld(tilemap.WorldToCell(pos));
 	}
 
-	public void SpawnDisaster(DisasterTypes type)
+	[ContextMenu("TestSpread")]
+	public void SpreadDisasters()
 	{
+		List<WorldTile> possibleSpreadTiles = new List<WorldTile>(4);
 
-	}
+		// Find all the disaster tiles and spread to a free adjacent tile
+		foreach (WorldTile tile in tiles)
+		{
+			// Not a disaster? Keep going. Also keep going if justSpread is set, as this means the disaster
+			// tile is a result of spreading this turn.
+			if (tile.type == DisasterTypes.Count || tile.justSpread)
+			{
+				continue;
+			}
+			
+			foreach (WorldTile adjTile in tile.adjacentTiles.Values)
+			{
+				if (adjTile.type == DisasterTypes.Count)
+				{
+					possibleSpreadTiles.Add(adjTile);
+				}
+			}
 
-	public void SpawnDisasterAdjacent(DisasterTypes type, Vector3 worldLocation)
-	{
+			int spreadTileIndex = Random.Range(0, possibleSpreadTiles.Count);
+			WorldTile spreadTile = possibleSpreadTiles[spreadTileIndex];
+			if (spreadTile != null)
+			{
+				spreadTile.type = tile.type;
+				spreadTile.justSpread = true;
+				tilemap.SetTile(spreadTile.cellLocation, disasterTiles[tile.type]);
+				numDisasters++;
+			}
 
+			possibleSpreadTiles.Clear();
+		}
+
+		// Clear the justSpread flag
+		foreach (WorldTile tile in tiles)
+		{
+			tile.justSpread = false;
+		}
 	}
 
 	public int GetDisasterCount()
@@ -219,6 +252,7 @@ public class TileManager : MonoBehaviour
 		TileBase clickedTile = tilemap.GetTile(clickedTilePos);
 		Debug.Log("Clearing " + clickedTile);
 		tilemap.SetTile(clickedTilePos, emptyTile);
+		numDisasters--;
 	}
 
 	private List<Vector3> RandomizeDisasterLocations(int numDisasters)
