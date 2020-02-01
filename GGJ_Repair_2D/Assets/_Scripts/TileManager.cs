@@ -198,6 +198,16 @@ public class TileManager : MonoBehaviour
 		return tilemap.GetCellCenterWorld(tilemap.WorldToCell(pos));
 	}
 
+	public void OnUnitMovedToTile(Vector3 newWorldLocation, int unitNumber)
+	{
+		Vector3Int cellPos = tilemap.WorldToCell(newWorldLocation);
+		WorldTile tile = tiles[cellPos.x, cellPos.y];
+		if (tile != null)
+		{
+			tile.occupiedByUnit = unitNumber;
+		}
+	}
+
 	[ContextMenu("TestSpread")]
 	public void SpreadDisasters()
 	{
@@ -231,6 +241,11 @@ public class TileManager : MonoBehaviour
 					spreadTile.justSpread = true;
 					tilemap.SetTile(spreadTile.cellLocation, disasterTiles[tile.type]);
 					numDisasters++;
+
+					if (spreadTile.occupiedByUnit > -1)
+					{
+						UnitManager.instance.Kill(spreadTile.occupiedByUnit);
+					}
 				}
 			}
 
@@ -307,7 +322,7 @@ public class TileManager : MonoBehaviour
 	{
 		for (int x = 0; x < GRID_WIDTH; x++)
 		{
-			for (int y = 0; y < GRID_WIDTH; y++)
+			for (int y = 0; y < GRID_HEIGHT; y++)
 			{
 				if (tiles[x, y] != null)
 				{
