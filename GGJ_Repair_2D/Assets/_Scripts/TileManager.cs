@@ -71,12 +71,6 @@ public class TileManager : MonoBehaviour
 		initialized = true;
 	}
 
-	public void ToggleAdjacentHighlight(Vector3 location)
-	{
-		Vector3Int cellPos = tilemap.WorldToCell(location);
-
-	}
-
 	[ContextMenu("TestGenerateMap")]
 	public void TestGenerate()
 	{
@@ -133,7 +127,7 @@ public class TileManager : MonoBehaviour
 
 				Vector3Int cellLoc = new Vector3Int(x, y, 0);
 				tilemap.SetTile(cellLoc, tileToSpawn);
-				tiles[x, y] = new WorldTile(type);
+				tiles[x, y] = new WorldTile(type, cellLoc);
 			}
 		}
 
@@ -167,6 +161,36 @@ public class TileManager : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	public void ToggleAdjacentHighlight(Vector3 location, bool isHighlighted = true)
+	{
+		Vector3Int cellPos = tilemap.WorldToCell(location);
+		WorldTile tile = tiles[cellPos.x, cellPos.y];
+		if (tile != null)
+		{
+			foreach (WorldTile adjTile in tile.adjacentTiles.Values)
+			{
+				if (adjTile.IsFree())
+				{
+					tilemap.SetTileFlags(adjTile.cellLocation, TileFlags.None);
+					tilemap.SetColor(adjTile.cellLocation, isHighlighted ? Color.green : Color.white);
+				}
+			}
+		}
+	}
+
+	public int GetUnitOccupyingCell(Vector3 worldLocation)
+	{
+		Vector3Int cellPos = tilemap.WorldToCell(worldLocation);
+		WorldTile tile = tiles[cellPos.x, cellPos.y];
+
+		if (tile != null)
+		{
+			return tile.occupiedByUnit;
+		}
+
+		return -1;
 	}
 
 	public void SpawnDisaster(DisasterTypes type)
