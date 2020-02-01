@@ -30,6 +30,8 @@ public class TileManager : MonoBehaviour
 
 	WorldTile[,] tiles = new WorldTile[GRID_WIDTH, GRID_HEIGHT];
 
+	bool initialized = false;
+
 	private void Awake()
 	{
 		if (Instance == null)
@@ -43,7 +45,20 @@ public class TileManager : MonoBehaviour
 		}
 	}
 
-	private void Start()
+	private void Update()
+	{
+		if (Input.GetMouseButtonDown(0))
+		{
+			Vector3 worldLoc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			Vector3Int clickedTilePos = tilemap.WorldToCell(worldLoc);
+			Debug.Log("Clicked " + clickedTilePos);
+			tilemap.SetTile(clickedTilePos, emptyTile);
+			tilemap.SetTileFlags(clickedTilePos, TileFlags.None);
+			tilemap.SetColor(clickedTilePos, Color.green);
+		}
+	}
+
+	private void Init()
 	{
 		grid = transform.parent.GetComponent<GridLayout>();
 		tilemap = GetComponent<Tilemap>();
@@ -52,18 +67,14 @@ public class TileManager : MonoBehaviour
 		disasterTiles.Add(DisasterTypes.Fire, Resources.Load<TileBase>("Tiles/FireTile"));
 		disasterTiles.Add(DisasterTypes.Flood, Resources.Load<TileBase>("Tiles/FloodTile"));
 		disasterTiles.Add(DisasterTypes.Disease, Resources.Load<TileBase>("Tiles/DiseaseTile"));
+
+		initialized = true;
 	}
 
-	private void Update()
+	public void ToggleAdjacentHighlight(Vector3 location)
 	{
-		//if (Input.GetMouseButtonDown(0))
-		//{
-		//	Vector3 worldLoc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		//	Vector3Int clickedTilePos = tilemap.WorldToCell(worldLoc);
-		//	TileBase clickedTile = tilemap.GetTile(clickedTilePos);
-		//	Debug.Log("Clicked " + clickedTile);
-		//	tilemap.SetTile(clickedTilePos, disasterTiles[DisasterTypes.Disease]);
-		//}
+		Vector3Int cellPos = tilemap.WorldToCell(location);
+
 	}
 
 	[ContextMenu("TestGenerateMap")]
@@ -74,6 +85,11 @@ public class TileManager : MonoBehaviour
 
 	public void Generate(int numDisasters)
 	{
+		if (!initialized)
+		{
+			Init();
+		}
+
 		this.numDisasters = numDisasters;	// Track the number of disasters
 		Clear();	// Make sure the grid is empty before generating a new map
 		List<Vector3> disasterLocations = RandomizeDisasterLocations(numDisasters);	// Determine where the disasters will be
