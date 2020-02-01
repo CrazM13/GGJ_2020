@@ -252,10 +252,16 @@ public class TileManager : MonoBehaviour
 	public void ClearDisaster(Vector3 worldLocation)
 	{
 		Vector3Int clickedTilePos = tilemap.WorldToCell(worldLocation);
-		TileBase clickedTile = tilemap.GetTile(clickedTilePos);
-		Debug.Log("Clearing " + clickedTile);
+		tiles[clickedTilePos.x, clickedTilePos.y].type = DisasterTypes.Count;
+		Debug.Log("Clearing " + clickedTilePos);
 		tilemap.SetTile(clickedTilePos, emptyTile);
 		numDisasters--;
+	}
+
+	public DisasterTypes GetTileDisasterType(Vector3 worldLocation)
+	{
+		Vector3Int tileCell = tilemap.WorldToCell(worldLocation);
+		return tiles[tileCell.x, tileCell.y].type;
 	}
 
 	private List<Vector3> RandomizeDisasterLocations(int numDisasters)
