@@ -1,9 +1,9 @@
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
-[Bb]uild/
-[Bb]uilds/
-Assets/AssetStoreTools*
+GGJ_Repair_2D/Library/
+GGJ_Repair_2D/Temp/
+GGJ_Repair_2D/Obj/
+GGJ_Repair_2D/Build/
+GGJ_Repair_2D/Builds/
+GGJ_Repair_2D/Assets/AssetStoreTools*
 
 # Visual Studio cache directory
 .vs/
