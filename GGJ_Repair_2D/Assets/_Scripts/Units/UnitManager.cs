@@ -41,4 +41,8 @@ public class UnitManager : MonoBehaviour {
 		return allComplete;
 	}
 
+	private void OnDestroy() {
+		instance = null;
+	}
+
 }

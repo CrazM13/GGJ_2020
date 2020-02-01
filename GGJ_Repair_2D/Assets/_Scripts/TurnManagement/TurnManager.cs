@@ -38,7 +38,7 @@ public class TurnManager : MonoBehaviour {
 	}
 
 	private void NextTurnStage() {
-		Debug.Log($"CHANGE FROM STAGE {turnStage} TO STAGE {turnStage + 1 % turnStates.Count}");
+		Debug.Log($"CHANGE FROM STAGE {turnStage} TO STAGE {(turnStage + 1) % turnStates.Count}");
 		turnStage++;
 
 		if (turnStage >= turnStates.Count) {
