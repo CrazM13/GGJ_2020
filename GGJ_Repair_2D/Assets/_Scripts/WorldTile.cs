@@ -15,9 +15,11 @@ public class WorldTile
     //public GameObject gameObject;
 	//public TileManager.TileTypes type = TileManager.TileTypes.Empty;
 	public DisasterTypes type = DisasterTypes.Count;	// Treat Count as none (i.e. empty tile)
-	public int isOccupiedByUnit = -1;
+	public Vector3Int cellLocation;
+	public int occupiedByUnit = -1;
+	public bool justSpread = false;
 
-	Dictionary<TileDirections, WorldTile> adjacentTiles = new Dictionary<TileDirections, WorldTile>();
+	public Dictionary<TileDirections, WorldTile> adjacentTiles = new Dictionary<TileDirections, WorldTile>();
 
 	//public WorldTile(GameObject go, bool isDisasterTile)
 	//{
@@ -29,9 +31,10 @@ public class WorldTile
 	//	}
 	//}
 
-	public WorldTile(DisasterTypes type)
+	public WorldTile(DisasterTypes type, Vector3Int loc)
 	{
 		this.type = type;
+		cellLocation = loc;
 	}
 
 	public void SetAdjacentTile(TileDirections dir, WorldTile tile)
@@ -44,5 +47,15 @@ public class WorldTile
 		{
 			adjacentTiles.Add(dir, tile);
 		}
+	}
+
+	public bool IsFree()
+	{
+		if (type == DisasterTypes.Count && occupiedByUnit == -1)
+		{
+			return true;
+		}
+
+		return false;
 	}
 }

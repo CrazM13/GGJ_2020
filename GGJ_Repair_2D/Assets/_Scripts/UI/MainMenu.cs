@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public string newGameScene = "UpgradeScreen";
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +21,6 @@ public class MainMenu : MonoBehaviour
     {
        
         CreateNewCampaign();
-        SceneManager.LoadScene(newGameScene);
     }
 
     public void HandleOptionsButton()
@@ -53,11 +51,11 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Player 4 is " + name4);
 
 
-        // todo: new campaign
+		GameManager.Instance.ShowUpgradeScreen();
     }
 
     public void HandleCreditsScreen()
     {
-        SceneManager.LoadScene("Credits");
+		GameManager.Instance.ShowCreditScreen();
     }
 }

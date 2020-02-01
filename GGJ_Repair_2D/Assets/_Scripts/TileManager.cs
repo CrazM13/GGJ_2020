@@ -30,6 +30,8 @@ public class TileManager : MonoBehaviour
 
 	WorldTile[,] tiles = new WorldTile[GRID_WIDTH, GRID_HEIGHT];
 
+	bool initialized = false;
+
 	private void Awake()
 	{
 		if (Instance == null)
@@ -43,7 +45,20 @@ public class TileManager : MonoBehaviour
 		}
 	}
 
-	private void Start()
+	private void Update()
+	{
+		if (Input.GetMouseButtonDown(0))
+		{
+			Vector3 worldLoc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			Vector3Int clickedTilePos = tilemap.WorldToCell(worldLoc);
+			Debug.Log("Clicked " + clickedTilePos);
+			tilemap.SetTile(clickedTilePos, emptyTile);
+			tilemap.SetTileFlags(clickedTilePos, TileFlags.None);
+			tilemap.SetColor(clickedTilePos, Color.green);
+		}
+	}
+
+	private void Init()
 	{
 		grid = transform.parent.GetComponent<GridLayout>();
 		tilemap = GetComponent<Tilemap>();
@@ -52,18 +67,8 @@ public class TileManager : MonoBehaviour
 		disasterTiles.Add(DisasterTypes.Fire, Resources.Load<TileBase>("Tiles/FireTile"));
 		disasterTiles.Add(DisasterTypes.Flood, Resources.Load<TileBase>("Tiles/FloodTile"));
 		disasterTiles.Add(DisasterTypes.Disease, Resources.Load<TileBase>("Tiles/DiseaseTile"));
-	}
 
-	private void Update()
-	{
-		//if (Input.GetMouseButtonDown(0))
-		//{
-		//	Vector3 worldLoc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		//	Vector3Int clickedTilePos = tilemap.WorldToCell(worldLoc);
-		//	TileBase clickedTile = tilemap.GetTile(clickedTilePos);
-		//	Debug.Log("Clicked " + clickedTile);
-		//	tilemap.SetTile(clickedTilePos, disasterTiles[DisasterTypes.Disease]);
-		//}
+		initialized = true;
 	}
 
 	[ContextMenu("TestGenerateMap")]
@@ -74,6 +79,11 @@ public class TileManager : MonoBehaviour
 
 	public void Generate(int numDisasters)
 	{
+		if (!initialized)
+		{
+			Init();
+		}
+
 		this.numDisasters = numDisasters;	// Track the number of disasters
 		Clear();	// Make sure the grid is empty before generating a new map
 		List<Vector3> disasterLocations = RandomizeDisasterLocations(numDisasters);	// Determine where the disasters will be
@@ -117,7 +127,7 @@ public class TileManager : MonoBehaviour
 
 				Vector3Int cellLoc = new Vector3Int(x, y, 0);
 				tilemap.SetTile(cellLoc, tileToSpawn);
-				tiles[x, y] = new WorldTile(type);
+				tiles[x, y] = new WorldTile(type, cellLoc);
 			}
 		}
 
@@ -153,14 +163,85 @@ public class TileManager : MonoBehaviour
 		}
 	}
 
-	public void SpawnDisaster(DisasterTypes type)
+	public void ToggleAdjacentHighlight(Vector3 location, bool isHighlighted = true)
 	{
-
+		Vector3Int cellPos = tilemap.WorldToCell(location);
+		WorldTile tile = tiles[cellPos.x, cellPos.y];
+		if (tile != null)
+		{
+			foreach (WorldTile adjTile in tile.adjacentTiles.Values)
+			{
+				if (adjTile.IsFree())
+				{
+					tilemap.SetTileFlags(adjTile.cellLocation, TileFlags.None);
+					tilemap.SetColor(adjTile.cellLocation, isHighlighted ? Color.green : Color.white);
+				}
+			}
+		}
 	}
 
-	public void SpawnDisasterAdjacent(DisasterTypes type, Vector3 worldLocation)
+	public int GetUnitOccupyingCell(Vector3 worldLocation)
 	{
+		Vector3Int cellPos = tilemap.WorldToCell(worldLocation);
+		WorldTile tile = tiles[cellPos.x, cellPos.y];
 
+		if (tile != null)
+		{
+			return tile.occupiedByUnit;
+		}
+
+		return -1;
+	}
+
+	public Vector3 GetWorldTileCenterPos(Vector3 pos)
+	{
+		return tilemap.GetCellCenterWorld(tilemap.WorldToCell(pos));
+	}
+
+	[ContextMenu("TestSpread")]
+	public void SpreadDisasters()
+	{
+		List<WorldTile> possibleSpreadTiles = new List<WorldTile>(4);
+
+		// Find all the disaster tiles and spread to a free adjacent tile
+		foreach (WorldTile tile in tiles)
+		{
+			// Not a disaster? Keep going. Also keep going if justSpread is set, as this means the disaster
+			// tile is a result of spreading this turn.
+			if (tile.type == DisasterTypes.Count || tile.justSpread)
+			{
+				continue;
+			}
+			
+			foreach (WorldTile adjTile in tile.adjacentTiles.Values)
+			{
+				if (adjTile.type == DisasterTypes.Count)
+				{
+					possibleSpreadTiles.Add(adjTile);
+				}
+			}
+
+			if (possibleSpreadTiles.Count > 0)
+			{
+				int spreadTileIndex = Random.Range(0, possibleSpreadTiles.Count);
+				WorldTile spreadTile = possibleSpreadTiles[spreadTileIndex];
+				if (spreadTile != null)
+				{
+					spreadTile.type = tile.type;
+					spreadTile.justSpread = true;
+					tilemap.SetTile(spreadTile.cellLocation, disasterTiles[tile.type]);
+					numDisasters++;
+				}
+			}
+
+			possibleSpreadTiles.Clear();
+		}
+
+		// Clear the justSpread flag
+		foreach (WorldTile tile in tiles)
+		{
+			tile.justSpread = false;
+		}
 	}
 
 	public int GetDisasterCount()
@@ -174,6 +255,7 @@ public class TileManager : MonoBehaviour
 		TileBase clickedTile = tilemap.GetTile(clickedTilePos);
 		Debug.Log("Clearing " + clickedTile);
 		tilemap.SetTile(clickedTilePos, emptyTile);
+		numDisasters--;
 	}
 
 	private List<Vector3> RandomizeDisasterLocations(int numDisasters)

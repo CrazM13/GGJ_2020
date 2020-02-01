@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class UpgradeScene : MonoBehaviour
 {
-    public string mainLevelScene = "TestScene";
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +19,11 @@ public class UpgradeScene : MonoBehaviour
 
     public void HandleBackButton()
     {
-        SceneManager.LoadScene("MainMenu");
+		GameManager.Instance.QuitToMenu();
     }
 
     public void HandleContinueButton()
     {
-        SceneManager.LoadScene(mainLevelScene);
+		GameManager.Instance.StartGame();
     }
 }
