@@ -27,7 +27,11 @@ public class MainMenu : MonoBehaviour
 
     public void HandleOptionsButton()
     {
-
+        OptionsPanel options = FindObjectOfType<OptionsPanel>();
+        if(options)
+        {
+            options.Panel.SetActive(true);
+        }
     }
 
     public void HandleQuitButton()
