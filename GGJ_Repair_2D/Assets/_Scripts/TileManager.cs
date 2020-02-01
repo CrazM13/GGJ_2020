@@ -193,6 +193,11 @@ public class TileManager : MonoBehaviour
 		return -1;
 	}
 
+	public Vector3 GetWorldTileCenterPos(Vector3 pos)
+	{
+		return tilemap.GetCellCenterWorld(tilemap.WorldToCell(pos));
+	}
+
 	public void SpawnDisaster(DisasterTypes type)
 	{
 
