@@ -26,7 +26,7 @@ public class CharacterUpgradePanel : MonoBehaviour
 		progress.maxValue = 50;
 		progress.minValue = 0;
 
-        if(nameLabel)
+        if(hero1sprite && nameLabel)
         {
             nameLabel.text = SkillStorage.GetName(characterID);
         }
