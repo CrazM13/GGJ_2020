@@ -368,9 +368,9 @@ public class TileManager : MonoBehaviour
 				y = Random.Range(0, GRID_HEIGHT);
 				Vector3 newLoc = new Vector3(x, y, 0f);
 
-				if ((x >= minX && x <= maxX) &&
-					(y >= minY && y <= maxY) &&
-					!locs.Contains(newLoc))
+				if (((x >= minX && x <= maxX) &&
+					(y >= minY && y <= maxY)) ||
+					locs.Contains(newLoc))
 				{
 					success = false;
 				}
