@@ -1143,6 +1143,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Panel: {fileID: 7506852673487015230}
+  sfxSlider: {fileID: 4801902269580842369}
+  musicSlider: {fileID: 3178141493812222562}
 --- !u!1 &4319689601432781924
 GameObject:
   m_ObjectHideFlags: 0

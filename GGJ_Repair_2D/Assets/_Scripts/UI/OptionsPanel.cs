@@ -7,10 +7,16 @@ public class OptionsPanel : MonoBehaviour
 {
     public GameObject Panel;
 
+    public Slider sfxSlider;
+    public Slider musicSlider;
+
     // Start is called before the first frame update
     void Start()
     {
         Panel.SetActive(false);
+
+        sfxSlider.value = SoundSystem.Instance.audioSource.volume;
+        musicSlider.value = MusicPlayer.Current.audioSource.volume;
     }
 
     // Update is called once per frame
