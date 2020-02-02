@@ -122,4 +122,7 @@ public class IssueCommandState : ITurnState {
 		}
 	}
 
+	public void End() {
+		
+	}
 }

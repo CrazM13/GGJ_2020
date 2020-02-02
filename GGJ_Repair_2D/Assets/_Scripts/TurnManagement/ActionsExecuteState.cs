@@ -9,6 +9,10 @@ public class ActionsExecuteState : ITurnState {
 		return TileManager.Instance.GetDisasterCount() == 0;
 	}
 
+	public void End() {
+		
+	}
+
 	public bool IsDone() {
 		return UnitManager.instance.AreActionsComplete();
 	}

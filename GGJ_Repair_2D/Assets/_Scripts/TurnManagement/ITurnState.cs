@@ -6,6 +6,7 @@ public interface ITurnState {
 
 	void Start();
 	void Update();
+	void End();
 	bool IsDone();
 	bool DidWin();
 
