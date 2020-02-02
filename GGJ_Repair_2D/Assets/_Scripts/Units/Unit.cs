@@ -22,8 +22,11 @@ public class Unit : MonoBehaviour {
 
 	private Vector2 startPosition = Vector2.zero;
 
+	private ParticleSystem fixParticles;
+
 	void Start() {
 		startPosition = transform.position;
+		fixParticles = GetComponentInChildren<ParticleSystem>();
 	}
 
 	void Update() {
@@ -42,6 +45,11 @@ public class Unit : MonoBehaviour {
 			}
 
 		}
+
+		bool playParticles = IsLastActionFixing();
+		if (playParticles) fixParticles.Play();
+		else fixParticles.Stop();
+
 	}
 
 	public void AddAction(UnitAction action) {
