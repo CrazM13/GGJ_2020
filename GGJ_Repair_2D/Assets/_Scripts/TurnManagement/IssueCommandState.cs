@@ -27,8 +27,17 @@ public class IssueCommandState : ITurnState {
 		//	HighlightOptions();
 		//}
 
+		mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
 		if (Input.GetMouseButtonDown(0)) {
 			OnClick();
+		}
+
+		if (selectedUnit > 0 && TileManager.Instance.GetTileDisasterType(mousePosition) != DisasterTypes.Count) {
+			float chance = UnitManager.instance.GetFixChance(selectedUnit, mousePosition);
+			FixPercentagePanel.instance.Show(Mathf.RoundToInt(chance * 100));
+		} else {
+			FixPercentagePanel.instance.Hide();
 		}
 
 	}

@@ -54,7 +54,6 @@ public class CharacterUpgradePanel : MonoBehaviour
     {
 		int level = SkillStorage.GetLevel(characterID, stat);
 		progress.value = level;
-		Debug.Log(level);
     }
 
     public void HandleStatChange(bool increase)

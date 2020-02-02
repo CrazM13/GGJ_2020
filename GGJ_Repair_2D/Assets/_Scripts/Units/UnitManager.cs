@@ -79,4 +79,8 @@ public class UnitManager : MonoBehaviour {
 		return units[unitNumber - 1].IsAlive();
 	}
 
+	public float GetFixChance(int unitNumber, Vector2 position) {
+		return units[unitNumber - 1].GetFixChance(position);
+	}
+
 }
