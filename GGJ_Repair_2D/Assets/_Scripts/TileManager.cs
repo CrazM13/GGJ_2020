@@ -182,9 +182,25 @@ public class TileManager : MonoBehaviour
 					//tilemap.SetTileFlags(adjTile.cellLocation, TileFlags.None);
 					//tilemap.SetColor(adjTile.cellLocation, isHighlighted ? highlightColor : normalColor);
 					tilemap.SetTile(adjTile.cellLocation, isHighlighted ? highlightTile : emptyTile);
+					//if (!isPendingTileRefresh)
+					//{
+					//	StartCoroutine(DelayRefreshTiles());
+					//}
+					//tilemap.RefreshTile(adjTile.cellLocation);
+					//tilemap.RefreshAllTiles();
 				}
 			}
 		}
+	}
+
+	bool isPendingTileRefresh = false;
+	IEnumerator DelayRefreshTiles()
+	{
+		isPendingTileRefresh = true;
+		yield return new WaitForSeconds(.1f);
+
+		tilemap.RefreshAllTiles();
+		isPendingTileRefresh = false;
 	}
 
 	public Vector3 GetWorldCoordsFromCellPosition(Vector3Int cellPosition)
@@ -342,7 +358,14 @@ public class TileManager : MonoBehaviour
 	public DisasterTypes GetTileDisasterType(Vector3 worldLocation)
 	{
 		Vector3Int tileCell = tilemap.WorldToCell(worldLocation);
-		return tiles[tileCell.x, tileCell.y].type;
+		WorldTile tile = SafeGetWorldTile(tileCell);
+
+		if (tile != null)
+		{
+			return tile.type;
+		}
+
+		return DisasterTypes.Count;
 	}
 
 	public List<Vector3> GetUnitStartPositions()
