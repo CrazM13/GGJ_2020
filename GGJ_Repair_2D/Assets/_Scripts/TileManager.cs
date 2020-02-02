@@ -358,7 +358,14 @@ public class TileManager : MonoBehaviour
 	public DisasterTypes GetTileDisasterType(Vector3 worldLocation)
 	{
 		Vector3Int tileCell = tilemap.WorldToCell(worldLocation);
-		return tiles[tileCell.x, tileCell.y].type;
+		WorldTile tile = SafeGetWorldTile(tileCell);
+
+		if (tile != null)
+		{
+			return tile.type;
+		}
+
+		return DisasterTypes.Count;
 	}
 
 	public List<Vector3> GetUnitStartPositions()
