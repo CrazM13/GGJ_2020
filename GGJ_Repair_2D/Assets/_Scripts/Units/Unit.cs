@@ -80,18 +80,16 @@ public class Unit : MonoBehaviour {
 
 	public void RunFixAction() {
 
-		Vector2? fixLocation = null;
+		Vector2 fixLocation;
 
 		if (actions.Count > 0) {
 			if (actions[0].GetActionType() == UnitAction.ActionType.FIX) {
 				fixLocation = actions[0].GetActionTarget();
-			}
-		}
-
-		if (fixLocation.HasValue) {
-			if (Random.value < GetFixChance(fixLocation.Value)) {
-				SkillStorage.AddUpgradePoint();
-				TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
+				if (Random.value < GetFixChance(fixLocation)) {
+					SkillStorage.AddUpgradePoint();
+					TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
+				}
+				actions.RemoveAt(0);
 			}
 		}
 	}

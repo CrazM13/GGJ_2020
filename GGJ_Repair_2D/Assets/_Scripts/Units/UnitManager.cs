@@ -29,7 +29,7 @@ public class UnitManager : MonoBehaviour {
 	public void ResetRemainingActions() {
 		foreach (Unit u in units) {
 			int remainingActions = u.GetRemainingActions();
-			u.SetActionCount(remainingActions == BASE_UNIT_ACTIONS ? BASE_UNIT_ACTIONS + 1 : BASE_UNIT_ACTIONS);
+			u.SetActionCount(remainingActions == BASE_UNIT_ACTIONS || remainingActions == BASE_UNIT_ACTIONS + 1 ? BASE_UNIT_ACTIONS + 1 : BASE_UNIT_ACTIONS);
 		}
 	}
 
@@ -54,7 +54,11 @@ public class UnitManager : MonoBehaviour {
 	}
 
 	public void AddAction(int unitNumber, UnitAction action) {
-		units[unitNumber - 1].AddAction(action);
+		units[unitNumber - 1]?.AddAction(action);
+	}
+
+	public int GetRemainingActions(int unitNumber) {
+		return units[unitNumber - 1].GetRemainingActions();
 	}
 
 }

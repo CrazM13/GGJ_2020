@@ -40,11 +40,8 @@ public class IssueCommandState : ITurnState {
 	private void OnClick() {
 		mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-		if (selectedUnit <= 0) {
-			SelectUnit();
-		} else {
-			AttemptAction();
-		}
+		SelectUnit();
+		AttemptAction();
 	}
 
 	private void SelectUnit() {
@@ -52,31 +49,44 @@ public class IssueCommandState : ITurnState {
 			TileManager.Instance.ToggleAdjacentHighlight(selectedTile, false);
 		}
 
-		selectedUnit = TileManager.Instance.GetUnitOccupyingCell(mousePosition);
-		if (selectedUnit <= 0 || selectedUnit > 4) {
-			TileManager.Instance.ToggleAdjacentHighlight(selectedTile, false);
-		}
-		Debug.Log(selectedUnit);
-		selectedTile = mousePosition;
+		int newSelect = TileManager.Instance.GetUnitOccupyingCell(mousePosition);
+		if (newSelect > 0) {
+			Debug.Log(newSelect);
+			selectedUnit = newSelect;
 
-		if (selectedUnit > 0 && selectedUnit <= 4) {
+			selectedTile = mousePosition;
+
 			HighlightOptions();
 		}
 	}
 
 	private void AttemptAction() {
-		WorldTile tile = TileManager.Instance.GetWorldTileAtPosition(selectedTile);
+		if (selectedUnit < 0) return;
+		int remainingActions = UnitManager.instance.GetRemainingActions(selectedUnit);
 
-		WorldTile selected = TileManager.Instance.GetWorldTileAtPosition(mousePosition);
+		if (remainingActions > 0) {
+			WorldTile tile = TileManager.Instance.GetWorldTileAtPosition(selectedTile);
 
-		foreach (WorldTile.TileDirections d in tile.adjacentTiles.Keys) {
-			WorldTile t = tile.adjacentTiles[d];
-			if (selected == t) {
-				
-				if (selected.occupiedByUnit == -1) {
-					SendAction(selected, d);
+			WorldTile selected = TileManager.Instance.GetWorldTileAtPosition(mousePosition);
+
+			foreach (WorldTile.TileDirections d in tile.adjacentTiles.Keys) {
+				WorldTile t = tile.adjacentTiles[d];
+				if (selected == t) {
+
+					if (selected.occupiedByUnit == -1) {
+						SendAction(selected, d);
+
+						remainingActions--;
+						if (remainingActions <= 0) {
+							selectedUnit = -1;
+							TileManager.Instance.ToggleAdjacentHighlight(selectedTile, false);
+						}
+					}
 				}
 			}
+		} else {
+			selectedUnit = -1;
+			TileManager.Instance.ToggleAdjacentHighlight(selectedTile, false);
 		}
 
 	}
@@ -89,11 +99,12 @@ public class IssueCommandState : ITurnState {
 			TileManager.Instance.ToggleAdjacentHighlight(selectedTile, false);
 			selectedTile = TileManager.Instance.GetWorldCoordsFromCellPosition(tile.cellLocation);
 			TileManager.Instance.ToggleAdjacentHighlight(selectedTile);
+			UnitManager.instance.AddAction(selectedUnit, action);
 		} else {
 			action = new UnitAction(UnitAction.ActionType.FIX, TileManager.Instance.GetWorldCoordsFromCellPosition(tile.cellLocation), UnitAction.ActionDirection.NONE);
+			UnitManager.instance.AddAction(selectedUnit, action);
+			selectedUnit = -1;
 		}
-
-		UnitManager.instance.AddAction(selectedUnit, action);
 	}
 
 	private UnitAction.ActionDirection WorldTileDirectionToActionDirection(WorldTile.TileDirections directions) {
