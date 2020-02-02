@@ -17,6 +17,8 @@ public class CharacterUpgradePanel : MonoBehaviour
     public Sprite hero3sprite;
     public Sprite hero4sprite;
 
+    public Sprite deadSprite;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,11 @@ public class CharacterUpgradePanel : MonoBehaviour
                     portrait.sprite = hero4sprite;
                     break;
             }
+        }
+
+        if(!GameManager.Instance.IsUnitAvailable(characterID))
+        {
+            portrait.sprite = deadSprite;
         }
 	}
 

@@ -13,7 +13,7 @@ public class ProblemsSpreadState : ITurnState {
 	}
 
 	public void Start() {
-		if (TurnManager.instance.TurnNumber % 3 == 0) {
+		if (TurnManager.instance.TurnNumber % 4 == 0) {
 			TileManager.Instance.StartDisasterSpread();
 		}
 
