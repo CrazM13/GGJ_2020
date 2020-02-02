@@ -6,6 +6,7 @@ public class SoundSystem : MonoBehaviour
 {
     public bool logSounds = false;
     public AudioSource audioSource;
+    private SoundEvents lastSoundPlayed = SoundEvents.Invalid;
 
     [System.Serializable]
     public class SoundEventData
@@ -141,7 +142,7 @@ public class SoundSystem : MonoBehaviour
         }
     }
 
-    public void PlaySound(SoundEvents i_ID)
+    public void PlaySound(SoundEvents i_ID, bool allowInterrupt = false)
     {
         if(logSounds)
         {
@@ -152,10 +153,16 @@ public class SoundSystem : MonoBehaviour
         {
             if (dataForSound.isEnabled && dataForSound.clips.Count > 0)
             {
+                if(!allowInterrupt && audioSource.isPlaying && lastSoundPlayed == i_ID)
+                {
+                    return;
+                }
+
                 AudioClip clip = dataForSound.clips[Random.Range(0, dataForSound.clips.Count)];
                 if (clip)
                 {
                     audioSource.PlayOneShot(clip);
+                    lastSoundPlayed = i_ID;
                 }
             }
         }
