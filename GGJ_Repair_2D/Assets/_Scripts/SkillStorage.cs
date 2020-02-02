@@ -30,7 +30,7 @@ public class SkillStorage : MonoBehaviour {
 	public static void RemoveTmpPoint(int unitNumber, Stats stat) {
 		unitNumber = unitNumber - 1;
 		if (tmpStats[unitNumber].GetPoints(stat) > stats[unitNumber].GetPoints(stat)) {
-			tmpStats[unitNumber - 1].RemovePoint(stat);
+			tmpStats[unitNumber].RemovePoint(stat);
 			remainingPoints++;
 		}	
 	}
