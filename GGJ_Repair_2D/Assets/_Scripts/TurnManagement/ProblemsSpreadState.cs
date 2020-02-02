@@ -9,7 +9,7 @@ public class ProblemsSpreadState : ITurnState {
 	}
 
 	public bool IsDone() {
-		return true;
+		return !TileManager.Instance.AreDisastersSpreading;
 	}
 
 	public void Start() {
