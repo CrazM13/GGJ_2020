@@ -20,11 +20,13 @@ public class TileManager : MonoBehaviour
 
 	GridLayout grid;
 	Tilemap tilemap;
+	public Tilemap overlayTilemap;
 
 	public bool AreDisastersSpreading { get; private set; }
 
 	TileBase emptyTile;
 	TileBase highlightTile;
+	TileBase overlayFixTile;
 	Dictionary<DisasterTypes, TileBase> disasterTiles = new Dictionary<DisasterTypes, TileBase>();
 	
 	Vector3 anchor = new Vector3(.5f, .5f, .5f);
@@ -70,6 +72,7 @@ public class TileManager : MonoBehaviour
 
 		emptyTile = Resources.Load<TileBase>("Tiles/EmptyTile");
 		highlightTile = Resources.Load<TileBase>("Tiles/HighlightTile");
+		overlayFixTile = Resources.Load<TileBase>("Tiles/FixOverlayTile");
 		disasterTiles.Add(DisasterTypes.Fire, Resources.Load<TileBase>("Tiles/FireTile"));
 		disasterTiles.Add(DisasterTypes.Flood, Resources.Load<TileBase>("Tiles/FloodTile"));
 		disasterTiles.Add(DisasterTypes.Disease, Resources.Load<TileBase>("Tiles/DiseaseTile"));
@@ -188,6 +191,10 @@ public class TileManager : MonoBehaviour
 					//}
 					//tilemap.RefreshTile(adjTile.cellLocation);
 					//tilemap.RefreshAllTiles();
+				}
+				else if (adjTile.type != DisasterTypes.Count)
+				{
+					overlayTilemap.SetTile(adjTile.cellLocation, isHighlighted ? overlayFixTile : null);
 				}
 			}
 		}
