@@ -45,7 +45,7 @@ public class TileManager : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetMouseButtonDown(0))
+		/*if (Input.GetMouseButtonDown(0))
 		{
 			Vector3 worldLoc = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			Vector3Int clickedTilePos = tilemap.WorldToCell(worldLoc);
@@ -53,7 +53,7 @@ public class TileManager : MonoBehaviour
 			tilemap.SetTile(clickedTilePos, emptyTile);
 			tilemap.SetTileFlags(clickedTilePos, TileFlags.None);
 			tilemap.SetColor(clickedTilePos, Color.green);
-		}
+		}*/
 	}
 
 	private void Init()

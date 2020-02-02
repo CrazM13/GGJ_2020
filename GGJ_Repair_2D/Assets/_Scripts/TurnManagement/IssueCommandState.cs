@@ -22,9 +22,10 @@ public class IssueCommandState : ITurnState {
 	}
 
 	public void Update() {
-		if (selectedUnit <= 0 || selectedUnit > 4) {
-			HighlightOptions();
-		}
+		//if (selectedUnit <= 0 || selectedUnit > 4) {
+		//if (selectedUnit > 0 && selectedUnit <= 4) {
+		//	HighlightOptions();
+		//}
 
 		if (Input.GetMouseButtonDown(0)) {
 			OnClick();
@@ -47,9 +48,20 @@ public class IssueCommandState : ITurnState {
 	}
 
 	private void SelectUnit() {
+		if (selectedUnit > 0) {
+			TileManager.Instance.ToggleAdjacentHighlight(selectedTile, false);
+		}
+
 		selectedUnit = TileManager.Instance.GetUnitOccupyingCell(mousePosition);
+		if (selectedUnit <= 0 || selectedUnit > 4) {
+			TileManager.Instance.ToggleAdjacentHighlight(selectedTile, false);
+		}
 		Debug.Log(selectedUnit);
 		selectedTile = mousePosition;
+
+		if (selectedUnit > 0 && selectedUnit <= 4) {
+			HighlightOptions();
+		}
 	}
 
 	private void AttemptAction() {
@@ -74,6 +86,9 @@ public class IssueCommandState : ITurnState {
 		
 		if (tile.type == DisasterTypes.Count) {
 			action = new UnitAction(UnitAction.ActionType.MOVE, TileManager.Instance.GetWorldCoordsFromCellPosition(tile.cellLocation), WorldTileDirectionToActionDirection(direction));
+			TileManager.Instance.ToggleAdjacentHighlight(selectedTile, false);
+			selectedTile = TileManager.Instance.GetWorldCoordsFromCellPosition(tile.cellLocation);
+			TileManager.Instance.ToggleAdjacentHighlight(selectedTile);
 		} else {
 			action = new UnitAction(UnitAction.ActionType.FIX, TileManager.Instance.GetWorldCoordsFromCellPosition(tile.cellLocation), UnitAction.ActionDirection.NONE);
 		}
