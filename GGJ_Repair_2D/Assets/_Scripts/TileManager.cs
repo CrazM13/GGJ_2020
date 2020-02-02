@@ -292,6 +292,7 @@ public class TileManager : MonoBehaviour
 					if (spreadTile.occupiedByUnit > -1)
 					{
 						UnitManager.instance.Kill(spreadTile.occupiedByUnit);
+						spreadTile.occupiedByUnit = -1;
 					}
 
 					yield return new WaitForSecondsRealtime(SPREAD_DELAY);
