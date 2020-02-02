@@ -20,6 +20,11 @@ public class CharacterUpgradePanel : MonoBehaviour
     void Update()
     {
 		progress.value = (float)SkillStorage.GetLevel(characterID, stat) / 50f;
+
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			SkillStorage.AddUpgradePoint();
+		}
+
     }
 
     public void HandleStatChange(bool increase)
