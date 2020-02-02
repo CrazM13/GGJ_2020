@@ -21,10 +21,12 @@ public class TileManager : MonoBehaviour
 	GridLayout grid;
 	Tilemap tilemap;
 
+	public bool AreDisastersSpreading { get; private set; }
+
 	TileBase emptyTile;
 	TileBase highlightTile;
 	Dictionary<DisasterTypes, TileBase> disasterTiles = new Dictionary<DisasterTypes, TileBase>();
-
+	
 	Vector3 anchor = new Vector3(.5f, .5f, .5f);
 	int numDisasters = 0;
 
@@ -254,6 +256,8 @@ public class TileManager : MonoBehaviour
 
 	public IEnumerator SpreadDisasters()
 	{
+		AreDisastersSpreading = true;
+
 		List<WorldTile> possibleSpreadTiles = new List<WorldTile>(4);
 
 		// Find all the disaster tiles and spread to a free adjacent tile
@@ -302,6 +306,8 @@ public class TileManager : MonoBehaviour
 		{
 			tile.justSpread = false;
 		}
+
+		AreDisastersSpreading = false;
 	}
 
 	public int GetDisasterCount()
