@@ -31,11 +31,6 @@ public class GameManager : MonoBehaviour
 
 	public void StartGame()
 	{
-        aliveUnits = new bool[]
-        {
-                    true, true, true, true
-        };
-
         SceneManager.LoadSceneAsync(4).completed += (e) => {
 			GameNumber++;
 			Debug.Log(GameNumber);
@@ -94,6 +89,13 @@ public class GameManager : MonoBehaviour
 
 	public void DisableUnit(int number) {
 		aliveUnits[number - 1] = false;
+	}
+
+	public void ResetDeath() {
+		aliveUnits = new bool[]
+		{
+			true, true, true, true
+		};
 	}
 
 }

@@ -61,7 +61,7 @@ public class MainMenu : MonoBehaviour
         SkillStorage.SetName(3, name3);
         SkillStorage.SetName(4, name4);
 
-
+		GameManager.Instance.ResetDeath();
 		GameManager.Instance.ShowUpgradeScreen();
     }
 
