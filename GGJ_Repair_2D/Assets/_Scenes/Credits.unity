@@ -155,8 +155,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -846.7, y: 325}
-  m_SizeDelta: {x: 846.7, y: 540}
+  m_AnchoredPosition: {x: -888.7, y: 325}
+  m_SizeDelta: {x: 1128.6, y: 540}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &65851957
 MonoBehaviour:
@@ -216,7 +216,7 @@ MonoBehaviour:
 
     Will
 
-    Ross Bugden - Music'
+    Ross Bugden - Music ( YouTube Channel )'
 --- !u!222 &65851959
 CanvasRenderer:
   m_ObjectHideFlags: 0
