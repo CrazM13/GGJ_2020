@@ -67,4 +67,12 @@ public class GameUI : MonoBehaviour
     {
         GetHeroHUD(hero).ClearActions();
     }
+
+    public void ClearAllHeroHUDActions()
+    {
+        ClearHeroHUDActions(1);
+        ClearHeroHUDActions(2);
+        ClearHeroHUDActions(3);
+        ClearHeroHUDActions(4);
+    }
 }

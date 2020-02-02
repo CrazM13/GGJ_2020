@@ -56,6 +56,9 @@ public class TurnManager : MonoBehaviour {
 
 	public void HandleEndTurnButton() {
 		NextTurnStage();
+
+        // update UI
+        FindObjectOfType<GameUI>()?.ClearAllHeroHUDActions();        
 	}
 
 	private void OnDestroy() {
