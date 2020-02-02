@@ -22,8 +22,6 @@ public class TileManager : MonoBehaviour
 
 	TileBase emptyTile;
 	Dictionary<DisasterTypes, TileBase> disasterTiles = new Dictionary<DisasterTypes, TileBase>();
-	//GameObject emptyTilePrefab;
-	//Dictionary<DisasterTypes, GameObject> disasterTilePrefabs = new Dictionary<DisasterTypes, GameObject>();
 
 	Vector3 anchor = new Vector3(.5f, .5f, .5f);
 	int numDisasters = 0;
@@ -178,6 +176,17 @@ public class TileManager : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	public Vector3 GetWorldCoordsFromCellPosition(Vector3Int cellPosition)
+	{
+		return tilemap.CellToWorld(cellPosition);
+	}
+
+	public WorldTile GetWorldTileAtPosition(Vector3 worldPosition)
+	{
+		Vector3Int cellPos = tilemap.WorldToCell(worldPosition);
+		return tiles[cellPos.x, cellPos.y];
 	}
 
 	public int GetUnitOccupyingCell(Vector3 worldLocation)
