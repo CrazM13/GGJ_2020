@@ -47,8 +47,8 @@ public class Unit : MonoBehaviour {
 		}
 
 		bool playParticles = IsLastActionFixing();
-		if (playParticles) fixParticles.Play();
-		else fixParticles.Stop();
+		if (playParticles && !fixParticles.isPlaying) fixParticles.Play();
+		else if (!playParticles && fixParticles.isPlaying) fixParticles.Stop();
 
 	}
 

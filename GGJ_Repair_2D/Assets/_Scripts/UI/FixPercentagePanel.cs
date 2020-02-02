@@ -25,7 +25,7 @@ public class FixPercentagePanel : MonoBehaviour {
 	}
 
 	public void Show(int chance) {
-		this.chance.text = chance.ToString();
+		this.chance.text = chance.ToString() + '%';
 		group.alpha = 1;
 	}
 
