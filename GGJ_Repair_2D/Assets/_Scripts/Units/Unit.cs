@@ -91,7 +91,10 @@ public class Unit : MonoBehaviour {
 		alive = false;
 		GameManager.Instance.DisableUnit(unitNumber);
 		GameCamera.instance.Shake(1);
-		GetComponent<SpriteRenderer>().sprite = graveSprite;
+
+		SpriteRenderer sr = GetComponent<SpriteRenderer>();
+		sr.sprite = graveSprite;
+		sr.sortingOrder = -1;
 	}
 
 	public bool RunFixAction() {
