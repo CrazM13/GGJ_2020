@@ -348,6 +348,18 @@ public class TileManager : MonoBehaviour
 		AreDisastersSpreading = false;
 	}
 
+	public void OnUnitKilled(int unitNumber)
+	{
+		foreach (WorldTile tile in tiles)
+		{
+			if (tile.occupiedByUnit == unitNumber)
+			{
+				tile.occupiedByUnit = -1;
+				break;
+			}
+		}
+	}
+
 	public int GetDisasterCount()
 	{
 		return numDisasters;
