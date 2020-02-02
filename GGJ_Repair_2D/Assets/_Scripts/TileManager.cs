@@ -16,6 +16,7 @@ public class TileManager : MonoBehaviour
 
 	const int GRID_WIDTH = 9;
 	const int GRID_HEIGHT = 9;
+	const float SPREAD_DELAY = .65f;
 
 	GridLayout grid;
 	Tilemap tilemap;
@@ -246,7 +247,12 @@ public class TileManager : MonoBehaviour
 	}
 
 	[ContextMenu("TestSpread")]
-	public void SpreadDisasters()
+	public void StartDisasterSpread()
+	{
+		StartCoroutine(SpreadDisasters());
+	}
+
+	public IEnumerator SpreadDisasters()
 	{
 		List<WorldTile> possibleSpreadTiles = new List<WorldTile>(4);
 
@@ -283,6 +289,8 @@ public class TileManager : MonoBehaviour
 					{
 						UnitManager.instance.Kill(spreadTile.occupiedByUnit);
 					}
+
+					yield return new WaitForSecondsRealtime(SPREAD_DELAY);
 				}
 			}
 
