@@ -21,6 +21,7 @@ public class TileManager : MonoBehaviour
 	Tilemap tilemap;
 
 	TileBase emptyTile;
+	TileBase highlightTile;
 	Dictionary<DisasterTypes, TileBase> disasterTiles = new Dictionary<DisasterTypes, TileBase>();
 
 	Vector3 anchor = new Vector3(.5f, .5f, .5f);
@@ -30,8 +31,8 @@ public class TileManager : MonoBehaviour
 
 	bool initialized = false;
 
-	Color highlightColor = new Color(Color.green.r, Color.green.g, Color.green.b, 0.5f);
-	Color normalColor = new Color(Color.green.r, Color.green.g, Color.green.b, 0f);
+	//Color highlightColor = new Color(Color.green.r, Color.green.g, Color.green.b, 0.5f);
+	//Color normalColor = new Color(Color.green.r, Color.green.g, Color.green.b, 0f);
 
 	private void Awake()
 	{
@@ -65,6 +66,7 @@ public class TileManager : MonoBehaviour
 		tilemap = GetComponent<Tilemap>();
 
 		emptyTile = Resources.Load<TileBase>("Tiles/EmptyTile");
+		highlightTile = Resources.Load<TileBase>("Tiles/HighlightTile");
 		disasterTiles.Add(DisasterTypes.Fire, Resources.Load<TileBase>("Tiles/FireTile"));
 		disasterTiles.Add(DisasterTypes.Flood, Resources.Load<TileBase>("Tiles/FloodTile"));
 		disasterTiles.Add(DisasterTypes.Disease, Resources.Load<TileBase>("Tiles/DiseaseTile"));
@@ -174,8 +176,9 @@ public class TileManager : MonoBehaviour
 			{
 				if (adjTile.IsFree())
 				{
-					tilemap.SetTileFlags(adjTile.cellLocation, TileFlags.None);
-					tilemap.SetColor(adjTile.cellLocation, isHighlighted ? highlightColor : normalColor);
+					//tilemap.SetTileFlags(adjTile.cellLocation, TileFlags.None);
+					//tilemap.SetColor(adjTile.cellLocation, isHighlighted ? highlightColor : normalColor);
+					tilemap.SetTile(adjTile.cellLocation, isHighlighted ? highlightTile : emptyTile);
 				}
 			}
 		}
