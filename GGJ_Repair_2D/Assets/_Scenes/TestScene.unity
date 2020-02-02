@@ -1321,6 +1321,106 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4103719627998658162, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4103719627998658162, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4103719627998658162, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4103719627998658162, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5624857258835014695, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5624857258835014695, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5624857258835014695, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5624857258835014695, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101300536898472395, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101300536898472395, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101300536898472395, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 101300536898472395, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817028851018148497, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817028851018148497, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817028851018148497, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817028851018148497, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 582943283493382156, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 582943283493382156, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 582943283493382156, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 582943283493382156, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 306c8d1b464b0ca4ba6a9b6d7262cfb5, type: 3}
 --- !u!1 &2077568682

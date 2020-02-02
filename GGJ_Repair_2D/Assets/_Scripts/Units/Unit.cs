@@ -90,6 +90,7 @@ public class Unit : MonoBehaviour {
 	public void Kill() {
 		alive = false;
 		GameManager.Instance.DisableUnit(unitNumber);
+		GameCamera.instance.Shake(1);
 		GetComponent<SpriteRenderer>().sprite = graveSprite;
 	}
 
