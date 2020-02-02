@@ -288,6 +288,23 @@ public class TileManager : MonoBehaviour
 		return tiles[tileCell.x, tileCell.y].type;
 	}
 
+	public List<Vector3> GetUnitStartPositions()
+	{
+		List<Vector3> positions = new List<Vector3>(4);
+
+		int minX = Mathf.CeilToInt(GRID_WIDTH / 2f) - 1;
+		int maxX = Mathf.CeilToInt(GRID_WIDTH / 2f) + 1;
+		int minY = Mathf.CeilToInt(GRID_HEIGHT / 2f) - 1;
+		int maxY = Mathf.CeilToInt(GRID_HEIGHT / 2f) + 1;
+
+		positions.Add(tilemap.CellToWorld(new Vector3Int(minX, minY, 0)));
+		positions.Add(tilemap.CellToWorld(new Vector3Int(minX, maxY, 0)));
+		positions.Add(tilemap.CellToWorld(new Vector3Int(maxX, minY, 0)));
+		positions.Add(tilemap.CellToWorld(new Vector3Int(maxX, maxY, 0)));
+
+		return positions;
+	}
+
 	private List<Vector3> RandomizeDisasterLocations(int numDisasters)
 	{
 		List<Vector3> locs = new List<Vector3>();
