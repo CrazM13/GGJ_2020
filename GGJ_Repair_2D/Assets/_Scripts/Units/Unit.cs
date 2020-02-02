@@ -45,7 +45,17 @@ public class Unit : MonoBehaviour {
 	public void AddAction(UnitAction action) {
 		if (remainingActions <= 0) return;
 		remainingActions--;
+
 		// SET UI
+        switch( action.GetActionType())
+        {
+            case UnitAction.ActionType.FIX:
+                FindObjectOfType<GameUI>()?.AddHeroHUDRepair(unitNumber);
+                break;
+            case UnitAction.ActionType.MOVE:
+                FindObjectOfType<GameUI>()?.AddHeroHUDMove(unitNumber);
+                break;
+        }
 
 		actions.Add(action);
 	}

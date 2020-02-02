@@ -6,20 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
-    public Transform peopleContainer;
-    public GameObject peopleImageTemplate;
-
-    public Transform problemContainer;
-    public GameObject problemImageTemplate;
 
     public Button endTurnButton;
+
+    public CharacterHUDPanel hero1HUD;
+    public CharacterHUDPanel hero2HUD;
+    public CharacterHUDPanel hero3HUD;
+    public CharacterHUDPanel hero4HUD;
 
     // Start is called before the first frame update
     void Start()
     {
-        // hide the template
-        peopleImageTemplate.SetActive(false);
-        problemImageTemplate.SetActive(false);
     }
 
     // Update is called once per frame
@@ -27,51 +24,7 @@ public class GameUI : MonoBehaviour
     {
         
     }
-
-    public void UpdateNumPeople(int newNumber)
-    {
-        for (int i = 0; i < peopleContainer.childCount; i++)
-        {
-            Transform child = peopleContainer.GetChild(i);
-            if(child.gameObject != peopleImageTemplate)
-            {
-                Destroy(child.gameObject);
-            }
-        }
-
-        for(int i = 0; i < newNumber; i++)
-        {
-            GameObject goNew = GameObject.Instantiate<GameObject>(peopleImageTemplate, peopleContainer, worldPositionStays: false);
-            goNew.SetActive(true);
-        }
-    }
-
-    public void UpdateNumProblems(int newNumber)
-    {
-        for (int i = 0; i < problemContainer.childCount; i++)
-        {
-            Transform child = problemContainer.GetChild(i);
-            if (child.gameObject != problemImageTemplate)
-            {
-                Destroy(child.gameObject);
-            }
-        }
-
-        for (int i = 0; i < newNumber; i++)
-        {
-            GameObject goNew = GameObject.Instantiate<GameObject>(problemImageTemplate, problemContainer, worldPositionStays: false);
-            goNew.SetActive(true);
-        }
-    }
-
-
-    [ContextMenu("Test set number 1")]
-    public void TestSetNumbers1()
-    {
-        UpdateNumPeople(3);
-        UpdateNumProblems(4);
-    }
-
+    
 
     public void HandleEndTurnButton()
     {
@@ -81,5 +34,37 @@ public class GameUI : MonoBehaviour
     public void HandleMainMenuButton()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public CharacterHUDPanel GetHeroHUD(int hero)
+    {
+        switch(hero)
+        {
+            case 1: return hero1HUD;
+            case 2: return hero2HUD;
+            case 3: return hero3HUD;
+            case 4: return hero4HUD;
+        }
+        return null;
+    }
+
+    public void SetHeroHUDName(int hero, string i_name)
+    {
+        GetHeroHUD(hero).SetName(i_name);
+    }
+
+    public void AddHeroHUDMove(int hero)
+    {
+        GetHeroHUD(hero).AddMove();
+    }
+
+    public void AddHeroHUDRepair(int hero)
+    {
+        GetHeroHUD(hero).AddRepair();
+    }
+
+    public void ClearHeroHUDActions(int hero)
+    {
+        GetHeroHUD(hero).ClearActions();
     }
 }

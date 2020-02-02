@@ -7,6 +7,7 @@ public class CharacterUpgradePanel : MonoBehaviour
 {
     public int characterID;
 	public Stats stat;
+    public Text nameLabel;
 
 	private Slider progress;
 
@@ -16,6 +17,11 @@ public class CharacterUpgradePanel : MonoBehaviour
 		progress = GetComponentInChildren<Slider>();
 		progress.maxValue = 50;
 		progress.minValue = 0;
+
+        if(nameLabel)
+        {
+            nameLabel.text = SkillStorage.GetName(characterID);
+        }
 	}
 
     // Update is called once per frame
