@@ -22,7 +22,7 @@ public class CharacterHUDPanel : MonoBehaviour
     public Sprite hero2Sprite;
     public Sprite hero3Sprite;
     public Sprite hero4Sprite;
-    
+    public Sprite deadSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -43,13 +43,24 @@ public class CharacterHUDPanel : MonoBehaviour
                 break;
         }
 
+        if (!UnitManager.instance.IsUnitAlive(characterID))
+        {
+            portrait.sprite = deadSprite;
+        }
+
         SetName(SkillStorage.GetName(characterID));
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (
+            portrait.sprite != deadSprite &&
+            !UnitManager.instance.IsUnitAlive(characterID) 
+            )
+        {
+            portrait.sprite = deadSprite;
+        }
     }
 
     Image FindNextAvailableActionSlot()

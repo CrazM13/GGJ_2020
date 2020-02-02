@@ -175,6 +175,11 @@ MonoBehaviour:
   statOutput: {fileID: 7860377279169828374}
   nameLabel: {fileID: 1880527308103081054}
   portraitHolder: {fileID: 4389116701221900363}
+  hero1Sprite: {fileID: 21300000, guid: 57b6bd049af318347890139c74d87572, type: 3}
+  hero2Sprite: {fileID: 21300000, guid: 91fe6e0fc56603a4dbfaae922f54eb4e, type: 3}
+  hero3Sprite: {fileID: 21300000, guid: 5e964c40b9e7056489d4f49f305121f8, type: 3}
+  hero4Sprite: {fileID: 21300000, guid: dcb17cd0253f9fd4da42359eb0b88e18, type: 3}
+  deadSprite: {fileID: 21300000, guid: d4ebe80b9b46b1f46a72552483d32854, type: 3}
 --- !u!1 &5411036040655525622
 GameObject:
   m_ObjectHideFlags: 0
