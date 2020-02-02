@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnitStats {
 
+    public string name = "";
 	private Dictionary<Stats, int> levels;
 
 	public UnitStats() {

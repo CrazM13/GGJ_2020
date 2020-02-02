@@ -82,4 +82,13 @@ public class SkillStorage : MonoBehaviour {
 		return remainingPoints;
 	}
 
+    public static string GetName(int unitNumber)
+    {
+        return stats[unitNumber - 1].name;
+    }
+
+    public static void SetName(int unitNumber, string i_name)
+    {
+        stats[unitNumber - 1].name = i_name;
+    }
 }

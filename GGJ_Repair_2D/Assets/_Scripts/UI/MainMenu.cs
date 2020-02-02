@@ -51,6 +51,14 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Player 4 is " + name4);
 
 
+        // todo: skill point resets?
+
+        SkillStorage.SetName(1, name1);
+        SkillStorage.SetName(2, name2);
+        SkillStorage.SetName(3, name3);
+        SkillStorage.SetName(4, name4);
+
+
 		GameManager.Instance.ShowUpgradeScreen();
     }
 
