@@ -27,6 +27,13 @@ public class GameManager : MonoBehaviour
 		SceneManager.LoadSceneAsync(4).completed += (e) => {
 			GameNumber++;
 			TileManager.Instance.Generate(GameNumber + 3);
+			Vector3[] startPositions = TileManager.Instance.GetUnitStartPositions().ToArray();
+
+			for (int i = 0; i < 4; i++) {
+				UnitManager.instance.SetUnitPosition(i + 1, startPositions[i]);
+				TileManager.Instance.OnUnitMovedToTile(startPositions[i], i + 1);
+			}
+
 		};
 	}
 

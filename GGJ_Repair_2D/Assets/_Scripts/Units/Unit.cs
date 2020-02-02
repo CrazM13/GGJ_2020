@@ -27,23 +27,14 @@ public class Unit : MonoBehaviour {
 
 		if (actions.Count > 0) {
 
-			switch(actions[0].GetActionType()) {
-				case UnitAction.ActionType.FIX:
-					if (performingActions) {
-						actionTimer += Time.deltaTime;
-						if (actionTimer >= ACTION_TIME) {
-							TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
-						}
-					}
-					break;
-				case UnitAction.ActionType.MOVE:
-					actionTimer += Time.deltaTime;
-					transform.position = Vector2.Lerp(startPosition, actions[0].GetActionTarget(), actionTimer / ACTION_TIME);
-					break;
+			if (actions[0].GetActionType() == UnitAction.ActionType.MOVE) {
+				actionTimer += Time.deltaTime;
+				transform.position = Vector2.Lerp(startPosition, actions[0].GetActionTarget(), actionTimer / ACTION_TIME);
 			}
 
 			if (actionTimer >= ACTION_TIME) {
 				startPosition = transform.position;
+				TileManager.Instance.OnUnitMovedToTile(transform.position, unitNumber);
 				actionTimer = 0;
 				actions.RemoveAt(0);
 			}
@@ -84,6 +75,28 @@ public class Unit : MonoBehaviour {
 	public void Kill() {
 		// TMP
 		gameObject.SetActive(false);
+	}
+
+	public void RunFixAction() {
+
+		Vector2? fixLocation = null;
+
+		if (actions.Count > 0) {
+			if (actions[0].GetActionType() == UnitAction.ActionType.FIX) {
+				fixLocation = actions[0].GetActionTarget();
+			}
+		}
+
+		if (fixLocation.HasValue) {
+			if (Random.value < GetFixChance(fixLocation.Value)) {
+				TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
+			}
+		}
+	}
+
+	public void SetPosition(Vector2 position) {
+		transform.position = position;
+		startPosition = position;
 	}
 
 }

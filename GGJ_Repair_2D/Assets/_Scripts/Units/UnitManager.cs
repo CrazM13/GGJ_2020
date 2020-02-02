@@ -22,7 +22,7 @@ public class UnitManager : MonoBehaviour {
 
 	public void AttemptRepairs() {
 		foreach(Unit u in units) {
-			u.ExecuteActions();
+			u.RunFixAction();
 		}
 	}
 
@@ -42,11 +42,19 @@ public class UnitManager : MonoBehaviour {
 	}
 
 	public void Kill(int unitNumber) {
-		units[unitNumber + 1].Kill();
+		units[unitNumber - 1].Kill();
+	}
+
+	public void SetUnitPosition(int unitNumber, Vector2 position) {
+		units[unitNumber - 1].SetPosition(position);
 	}
 
 	private void OnDestroy() {
 		instance = null;
+	}
+
+	public void AddAction(int unitNumber, UnitAction action) {
+		units[unitNumber - 1].AddAction(action);
 	}
 
 }
