@@ -965,6 +965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d7b2135581fe343b3d5f43c4d7e7ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fixCursor: {fileID: 2800000, guid: b5b9d2de2d9e0bb4494b728bbe1b75fe, type: 3}
 --- !u!4 &1279585155
 Transform:
   m_ObjectHideFlags: 0

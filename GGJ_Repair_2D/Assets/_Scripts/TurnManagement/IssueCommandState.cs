@@ -9,6 +9,8 @@ public class IssueCommandState : ITurnState {
 	private Vector3 mousePosition;
 	private Vector3 selectedTile;
 
+	private GameUI ui = null;
+
 	public bool DidWin() {
 		return false;
 	}
@@ -19,6 +21,10 @@ public class IssueCommandState : ITurnState {
 
 	public void Start() {
 		UnitManager.instance.ResetRemainingActions();
+		if (!ui) {
+			ui = GameObject.FindObjectOfType<GameUI>();
+		}
+		ui.SetEndTurnInteractable(true);
 	}
 
 	public void Update() {
@@ -33,12 +39,7 @@ public class IssueCommandState : ITurnState {
 			OnClick();
 		}
 
-		if (selectedUnit > 0 && TileManager.Instance.GetTileDisasterType(mousePosition) != DisasterTypes.Count) {
-			float chance = UnitManager.instance.GetFixChance(selectedUnit, mousePosition);
-			FixPercentagePanel.instance.Show(Mathf.RoundToInt(chance * 100));
-		} else {
-			FixPercentagePanel.instance.Hide();
-		}
+		AttemptHoverAdjacent();
 
 	}
 
@@ -143,7 +144,42 @@ public class IssueCommandState : ITurnState {
 		}
 	}
 
+	private void AttemptHoverAdjacent() {
+		if (selectedUnit < 0) {
+			FixPercentagePanel.instance.Hide();
+			Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+			return;
+		}
+
+		bool isShowing = false;
+
+		WorldTile tile = TileManager.Instance.GetWorldTileAtPosition(selectedTile);
+
+		WorldTile selected = TileManager.Instance.GetWorldTileAtPosition(mousePosition);
+
+		foreach (WorldTile.TileDirections d in tile.adjacentTiles.Keys) {
+			WorldTile t = tile.adjacentTiles[d];
+			if (selected == t) {
+
+				if (selected.type != DisasterTypes.Count) {
+					float chance = UnitManager.instance.GetFixChance(selectedUnit, mousePosition);
+					FixPercentagePanel.instance.Show(Mathf.RoundToInt(chance * 100));
+					Cursor.SetCursor(GameManager.Instance.fixCursor, Vector2.zero, CursorMode.Auto);
+					isShowing = true;
+				}
+			}
+		}
+
+		if (!isShowing) {
+			FixPercentagePanel.instance.Hide();
+			Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+		}
+
+	}
+
 	public void End() {
-		
+		if (!ui) {
+			ui = GameObject.FindObjectOfType<GameUI>();
+		}
 	}
 }

@@ -37,7 +37,6 @@ public class Unit : MonoBehaviour {
 
 			if (actionTimer >= ACTION_TIME) {
 				startPosition = transform.position;
-				TileManager.Instance.OnUnitMovedToTile(transform.position, unitNumber);
 				actionTimer = 0;
 				actions.RemoveAt(0);
 			}
@@ -59,7 +58,8 @@ public class Unit : MonoBehaviour {
             case UnitAction.ActionType.MOVE:
                 FindObjectOfType<GameUI>()?.AddHeroHUDMove(unitNumber);
                 SoundSystem.Instance.PlayHeroMoveSound(unitNumber);
-                break;
+				TileManager.Instance.OnUnitMovedToTile(action.GetActionTarget(), unitNumber);
+				break;
         }
 
 		actions.Add(action);
