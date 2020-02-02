@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -93,20 +93,32 @@ public class Unit : MonoBehaviour {
 		GetComponent<SpriteRenderer>().sprite = graveSprite;
 	}
 
-	public void RunFixAction() {
+	public bool RunFixAction() {
 
 		Vector2 fixLocation;
 
 		if (actions.Count > 0) {
 			if (actions[0].GetActionType() == UnitAction.ActionType.FIX) {
+				actionTimer += Time.deltaTime;
 				fixLocation = actions[0].GetActionTarget();
-				if (Random.value < GetFixChance(fixLocation)) {
-					SkillStorage.AddUpgradePoint();
-					TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
+
+				if (actionTimer >= ACTION_TIME) {
+					if (Random.value < GetFixChance(fixLocation)) {
+						SkillStorage.AddUpgradePoint();
+						TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
+					}
+					Debug.Log("Attempted fix at " + Time.time);
+					actionTimer = 0f;
+					actions.RemoveAt(0);
+
+					return true;
 				}
-				actions.RemoveAt(0);
+
+				return false;
 			}
 		}
+
+		return true;
 	}
 
 	public void SetPosition(Vector2 position) {

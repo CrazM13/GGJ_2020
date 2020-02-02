@@ -22,7 +22,9 @@ public class UnitManager : MonoBehaviour {
 
 	public void AttemptRepairs() {
 		foreach(Unit u in units) {
-			u.RunFixAction();
+			if (!u.RunFixAction()) {
+				break;
+			}
 		}
 	}
 
