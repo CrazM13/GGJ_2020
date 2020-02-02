@@ -15,6 +15,9 @@ public class ProblemsSpreadState : ITurnState {
 	public void Start() {
 		if (TurnManager.instance.TurnNumber % 3 == 0) {
 			TileManager.Instance.StartDisasterSpread();
+			if (UnitManager.instance.GetRemainingUnitsCount() <= 0) {
+				GameManager.Instance.ShowStatScreen();
+			}
 		}
 	}
 
