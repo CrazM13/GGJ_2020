@@ -147,15 +147,15 @@ public class TileManager : MonoBehaviour
 				}
 
 				// Set the tile's above (no above if this is the first row)
-				if (y > 0)
+				if (y < GRID_HEIGHT - 1)
 				{
-					tiles[x, y].SetAdjacentTile(WorldTile.TileDirections.Above, tiles[x, y - 1]);
+					tiles[x, y].SetAdjacentTile(WorldTile.TileDirections.Above, tiles[x, y + 1]);
 				}
 
 				// Set the tile's below (no below if this is the last row)
-				if (y < GRID_HEIGHT - 1)
+				if (y > 0)
 				{
-					tiles[x, y].SetAdjacentTile(WorldTile.TileDirections.Below, tiles[x, y + 1]);
+					tiles[x, y].SetAdjacentTile(WorldTile.TileDirections.Below, tiles[x, y - 1]);
 				}
 			}
 		}
