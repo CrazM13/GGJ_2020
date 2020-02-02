@@ -50,7 +50,7 @@ public class IssueCommandState : ITurnState {
 		}
 
 		int newSelect = TileManager.Instance.GetUnitOccupyingCell(mousePosition);
-		if (newSelect > 0) {
+		if (newSelect > 0 && UnitManager.instance.IsUnitAlive(newSelect)) {
 			selectedUnit = newSelect;
 
 			selectedTile = mousePosition;

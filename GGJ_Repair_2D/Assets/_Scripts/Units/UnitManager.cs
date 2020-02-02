@@ -68,9 +68,13 @@ public class UnitManager : MonoBehaviour {
 	public int GetRemainingUnitsCount() {
 		int count = 0;
 		foreach (Unit u in units) {
-			if (u.gameObject.activeInHierarchy) count++;
+			if (u.IsAlive()) count++;
 		}
 		return count;
+	}
+
+	public bool IsUnitAlive(int unitNumber) {
+		return units[unitNumber - 1].IsAlive();
 	}
 
 }

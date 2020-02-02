@@ -83,4 +83,8 @@ public class GameManager : MonoBehaviour
 		return aliveUnits[number - 1];
 	}
 
+	public void DisableUnit(int number) {
+		aliveUnits[number - 1] = false;
+	}
+
 }

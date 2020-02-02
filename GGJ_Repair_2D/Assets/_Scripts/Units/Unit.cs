@@ -7,6 +7,9 @@ public class Unit : MonoBehaviour {
 	private const float ACTION_TIME = 0.5f;
 	private const float BASE_FIX_CHANCE = 0.33f;
 
+	public Sprite graveSprite;
+	private bool alive = true;
+
 	public int unitNumber = 0;
 
 	private List<UnitAction> actions = new List<UnitAction>();
@@ -85,8 +88,9 @@ public class Unit : MonoBehaviour {
 	}
 
 	public void Kill() {
-		// TMP
-		gameObject.SetActive(false);
+		alive = false;
+		GameManager.Instance.DisableUnit(unitNumber);
+		GetComponent<SpriteRenderer>().sprite = graveSprite;
 	}
 
 	public void RunFixAction() {
@@ -112,6 +116,10 @@ public class Unit : MonoBehaviour {
 
 	public bool IsLastActionFixing() {
 		return actions.Count > 0 && actions[actions.Count - 1].GetActionType() == UnitAction.ActionType.FIX;
+	}
+
+	public bool IsAlive() {
+		return alive;
 	}
 
 }
