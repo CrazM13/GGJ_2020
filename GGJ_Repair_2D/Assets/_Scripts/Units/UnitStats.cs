@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class UnitStats {
 
-	#region Const
-	private const float GAIN = 2f;
-	#endregion
-
 	private Dictionary<Stats, int> levels;
 
 	public UnitStats() {
@@ -23,12 +19,20 @@ public class UnitStats {
 		levels[stat]++;
 	}
 
+	public void RemovePoint(Stats stat) {
+		levels[stat]--;
+	}
+
 	public void SetPoints(Stats stat, int points) {
 		levels[stat] = points;
 	}
 
 	public int GetLevel(Stats stat) {
-		return Mathf.FloorToInt(Mathf.Pow(levels[stat], GAIN));
+		return Mathf.FloorToInt(Mathf.Sqrt(levels[stat]));
+	}
+
+	public int GetPoints(Stats stat) {
+		return levels[stat];
 	}
 
 }

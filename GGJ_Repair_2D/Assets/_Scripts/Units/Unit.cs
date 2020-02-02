@@ -59,8 +59,9 @@ public class Unit : MonoBehaviour {
 	}
 
 	public float GetFixChance(Vector2 target) {
-		// CHECK TYPE
-		int level = 0;// GET CHANCE FROM STATIC STATS
+		DisasterTypes type = TileManager.Instance.GetTileDisasterType(target);
+
+		int level = SkillStorage.GetLevel(unitNumber, SkillStorage.StatFromDisaster(type));
 		return BASE_FIX_CHANCE + ((float)level * 2 / 100f) + ((float)remainingActions * 2 / 100f);
 	}
 
@@ -89,6 +90,7 @@ public class Unit : MonoBehaviour {
 
 		if (fixLocation.HasValue) {
 			if (Random.value < GetFixChance(fixLocation.Value)) {
+				SkillStorage.AddUpgradePoint();
 				TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
 			}
 		}
