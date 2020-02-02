@@ -30,6 +30,9 @@ public class TileManager : MonoBehaviour
 
 	bool initialized = false;
 
+	Color highlightColor = new Color(Color.green.r, Color.green.g, Color.green.b, 0.5f);
+	Color normalColor = new Color(Color.green.r, Color.green.g, Color.green.b, 0f);
+
 	private void Awake()
 	{
 		if (Instance == null)
@@ -164,7 +167,7 @@ public class TileManager : MonoBehaviour
 	public void ToggleAdjacentHighlight(Vector3 location, bool isHighlighted = true)
 	{
 		Vector3Int cellPos = tilemap.WorldToCell(location);
-		WorldTile tile = tiles[cellPos.x, cellPos.y];
+		WorldTile tile = SafeGetWorldTile(cellPos);
 		if (tile != null)
 		{
 			foreach (WorldTile adjTile in tile.adjacentTiles.Values)
@@ -172,7 +175,7 @@ public class TileManager : MonoBehaviour
 				if (adjTile.IsFree())
 				{
 					tilemap.SetTileFlags(adjTile.cellLocation, TileFlags.None);
-					tilemap.SetColor(adjTile.cellLocation, isHighlighted ? Color.green : Color.white);
+					tilemap.SetColor(adjTile.cellLocation, isHighlighted ? highlightColor : normalColor);
 				}
 			}
 		}
@@ -186,13 +189,13 @@ public class TileManager : MonoBehaviour
 	public WorldTile GetWorldTileAtPosition(Vector3 worldPosition)
 	{
 		Vector3Int cellPos = tilemap.WorldToCell(worldPosition);
-		return tiles[cellPos.x, cellPos.y];
+		return SafeGetWorldTile(cellPos);
 	}
 
 	public int GetUnitOccupyingCell(Vector3 worldLocation)
 	{
 		Vector3Int cellPos = tilemap.WorldToCell(worldLocation);
-		WorldTile tile = tiles[cellPos.x, cellPos.y];
+		WorldTile tile = SafeGetWorldTile(cellPos);
 
 		if (tile != null)
 		{
@@ -200,6 +203,19 @@ public class TileManager : MonoBehaviour
 		}
 
 		return -1;
+	}
+
+	private WorldTile SafeGetWorldTile(Vector3Int cellPos)
+	{
+		if (cellPos.x >= 0 && cellPos.x < GRID_WIDTH)
+		{
+			if (cellPos.y >= 0 && cellPos.y < GRID_HEIGHT)
+			{
+				return tiles[cellPos.x, cellPos.y];
+			}
+		}
+
+		return null;
 	}
 
 	public Vector3 GetWorldTileCenterPos(Vector3 pos)
@@ -210,7 +226,7 @@ public class TileManager : MonoBehaviour
 	public void OnUnitMovedToTile(Vector3 newWorldLocation, int unitNumber)
 	{
 		Vector3Int cellPos = tilemap.WorldToCell(newWorldLocation);
-		WorldTile tile = tiles[cellPos.x, cellPos.y];
+		WorldTile tile = SafeGetWorldTile(cellPos);
 		if (tile != null)
 		{
 			tile.occupiedByUnit = unitNumber;
