@@ -9,6 +9,11 @@ public class GameManager : MonoBehaviour
 
 	public int GameNumber { get; private set; } = 0;
 
+	private bool[] aliveUnits = new bool[]
+	{
+		true, true, true, true
+	};
+
 	private void Awake()
 	{
 		if (Instance == null)
@@ -32,6 +37,10 @@ public class GameManager : MonoBehaviour
 			for (int i = 0; i < 4; i++) {
 				UnitManager.instance.SetUnitPosition(i + 1, startPositions[i]);
 				TileManager.Instance.OnUnitMovedToTile(startPositions[i], i + 1);
+
+				if (!IsUnitAvailable(i + 1)) {
+					UnitManager.instance.Kill(i + 1);
+				}
 			}
 
 		};
@@ -55,6 +64,16 @@ public class GameManager : MonoBehaviour
 	public void QuitToMenu()
 	{
 		SceneManager.LoadScene("MainMenu");
+	}
+
+	public void EndGame()
+	{
+		GameNumber = 0;
+		ShowStatScreen();
+	}
+
+	public bool IsUnitAvailable(int number) {
+		return aliveUnits[number - 1];
 	}
 
 }

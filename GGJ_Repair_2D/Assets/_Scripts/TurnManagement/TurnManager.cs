@@ -58,4 +58,8 @@ public class TurnManager : MonoBehaviour {
 		NextTurnStage();
 	}
 
+	private void OnDestroy() {
+		instance = null;
+	}
+
 }

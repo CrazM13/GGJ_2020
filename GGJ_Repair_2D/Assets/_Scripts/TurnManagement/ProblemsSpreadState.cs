@@ -22,7 +22,7 @@ public class ProblemsSpreadState : ITurnState {
 
 	public void End() {
 		if (UnitManager.instance.GetRemainingUnitsCount() <= 0) {
-			GameManager.Instance.ShowStatScreen();
+			GameManager.Instance.EndGame();
 		}
 	}
 }
