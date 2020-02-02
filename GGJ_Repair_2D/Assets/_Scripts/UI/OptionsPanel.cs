@@ -33,6 +33,11 @@ public class OptionsPanel : MonoBehaviour
         SoundSystem.Instance.PlaySound(SoundEvents.Select);
     }
 
+    public void OnMusicVolumeSliderChanged(float newVal)
+    {
+        MusicPlayer.Current.audioSource.volume = newVal;
+    }
+
     public void HandleCloseButton()
     {
         SoundSystem.Instance.PlaySound(SoundEvents.Select);
