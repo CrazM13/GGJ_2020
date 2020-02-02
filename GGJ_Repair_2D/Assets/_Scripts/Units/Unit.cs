@@ -62,6 +62,7 @@ public class Unit : MonoBehaviour {
 		DisasterTypes type = TileManager.Instance.GetTileDisasterType(target);
 
 		int level = SkillStorage.GetLevel(unitNumber, SkillStorage.StatFromDisaster(type));
+		if (Input.GetKey(KeyCode.F)) return 1000f;
 		return BASE_FIX_CHANCE + ((float)level * 2 / 100f) + ((float)remainingActions * 2 / 100f);
 	}
 

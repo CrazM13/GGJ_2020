@@ -19,6 +19,7 @@ public class IssueCommandState : ITurnState {
 
 	public void Start() {
 		UnitManager.instance.ResetRemainingActions();
+		Debug.Log(TileManager.Instance.GetDisasterCount());
 	}
 
 	public void Update() {
