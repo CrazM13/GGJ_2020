@@ -25,7 +25,9 @@ public class IssueCommandState : ITurnState {
 			ui = GameObject.FindObjectOfType<GameUI>();
 		}
 		ui.SetEndTurnInteractable(true);
-	}
+        ui.stageDisplay.text = "Stage - Issue Commands";
+        ui.turnDisplay.text = "Turn " + TurnManager.instance.TurnNumber;
+    }
 
 	public void Update() {
 		//if (selectedUnit <= 0 || selectedUnit > 4) {

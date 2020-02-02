@@ -17,8 +17,14 @@ public class ActionsExecuteState : ITurnState {
 		return UnitManager.instance.AreActionsComplete();
 	}
 
-	public void Start() {
-		
+	public void Start()
+    {
+        GameUI ui = GameObject.FindObjectOfType<GameUI>();
+        if(ui)
+        {
+            ui.stageDisplay.text = "Stage - Actions Execute";
+        }
+        
 	}
 
 	public void Update() {

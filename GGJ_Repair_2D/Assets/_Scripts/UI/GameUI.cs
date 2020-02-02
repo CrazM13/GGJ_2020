@@ -15,6 +15,9 @@ public class GameUI : MonoBehaviour
     public CharacterHUDPanel hero3HUD;
     public CharacterHUDPanel hero4HUD;
 
+    public Text stageDisplay;
+    public Text turnDisplay;
+
     // Start is called before the first frame update
     void Start()
     {

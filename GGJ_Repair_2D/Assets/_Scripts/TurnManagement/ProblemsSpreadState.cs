@@ -16,6 +16,12 @@ public class ProblemsSpreadState : ITurnState {
 		if (TurnManager.instance.TurnNumber % 3 == 0) {
 			TileManager.Instance.StartDisasterSpread();
 		}
+
+        GameUI ui = GameObject.FindObjectOfType<GameUI>();
+        if(ui)
+        {
+            ui.stageDisplay.text = "Stage - Problems Spread";
+        }
 	}
 
 	public void Update() {/*MT*/}
