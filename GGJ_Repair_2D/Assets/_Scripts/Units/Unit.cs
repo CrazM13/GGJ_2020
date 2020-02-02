@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +6,9 @@ public class Unit : MonoBehaviour {
 
 	private const float ACTION_TIME = 0.5f;
 	private const float BASE_FIX_CHANCE = 0.33f;
+
+	public Sprite graveSprite;
+	private bool alive = true;
 
 	public int unitNumber = 0;
 
@@ -87,6 +90,8 @@ public class Unit : MonoBehaviour {
 	}
 
 	public void Kill() {
+		// TMP
+		gameObject.SetActive(false);
 
         // Sounds
         switch(unitNumber)
@@ -105,34 +110,54 @@ public class Unit : MonoBehaviour {
                 break;
         }
 
-		// TMP
-		gameObject.SetActive(false);
+		alive = false;
+		GameManager.Instance.DisableUnit(unitNumber);
+		GetComponent<SpriteRenderer>().sprite = graveSprite;
 	}
 
-	public void RunFixAction() {
+	public bool RunFixAction() {
 
 		Vector2 fixLocation;
 
 		if (actions.Count > 0) {
 			if (actions[0].GetActionType() == UnitAction.ActionType.FIX) {
+				actionTimer += Time.deltaTime;
 				fixLocation = actions[0].GetActionTarget();
-				if (Random.value < GetFixChance(fixLocation))
-                {
-					SkillStorage.AddUpgradePoint();
-					TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
-				}
+
+				if (actionTimer >= ACTION_TIME) {
+					if (Random.value < GetFixChance(fixLocation)) {
+						SkillStorage.AddUpgradePoint();
+						TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
+					}
                 else
                 {
                     SoundSystem.Instance.PlaySound(SoundEvents.DisasterRepairFailure);
                 }
-				actions.RemoveAt(0);
+					Debug.Log("Attempted fix at " + Time.time);
+					actionTimer = 0f;
+					actions.RemoveAt(0);
+
+					return true;
+				}
+
+				return false;
 			}
 		}
+
+		return true;
 	}
 
 	public void SetPosition(Vector2 position) {
 		transform.position = position;
 		startPosition = position;
+	}
+
+	public bool IsLastActionFixing() {
+		return actions.Count > 0 && actions[actions.Count - 1].GetActionType() == UnitAction.ActionType.FIX;
+	}
+
+	public bool IsAlive() {
+		return alive;
 	}
 
 }

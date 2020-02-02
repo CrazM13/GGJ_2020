@@ -22,7 +22,9 @@ public class UnitManager : MonoBehaviour {
 
 	public void AttemptRepairs() {
 		foreach(Unit u in units) {
-			u.RunFixAction();
+			if (!u.RunFixAction()) {
+				break;
+			}
 		}
 	}
 
@@ -57,6 +59,10 @@ public class UnitManager : MonoBehaviour {
 		units[unitNumber - 1]?.AddAction(action);
 	}
 
+	public bool IsLastActionFixing(int unitNumber) {
+		return units[unitNumber - 1].IsLastActionFixing();
+	}
+
 	public int GetRemainingActions(int unitNumber) {
 		return units[unitNumber - 1].GetRemainingActions();
 	}
@@ -64,9 +70,13 @@ public class UnitManager : MonoBehaviour {
 	public int GetRemainingUnitsCount() {
 		int count = 0;
 		foreach (Unit u in units) {
-			if (u.gameObject.activeInHierarchy) count++;
+			if (u.IsAlive()) count++;
 		}
 		return count;
+	}
+
+	public bool IsUnitAlive(int unitNumber) {
+		return units[unitNumber - 1].IsAlive();
 	}
 
 }

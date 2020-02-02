@@ -19,7 +19,6 @@ public class IssueCommandState : ITurnState {
 
 	public void Start() {
 		UnitManager.instance.ResetRemainingActions();
-		Debug.Log(TileManager.Instance.GetDisasterCount());
 	}
 
 	public void Update() {
@@ -62,8 +61,7 @@ public class IssueCommandState : ITurnState {
 		}
 
 
-		if (newSelect > 0) {
-			Debug.Log(newSelect);
+		if (newSelect > 0 && UnitManager.instance.IsUnitAlive(newSelect)) {
 			selectedUnit = newSelect;
 
 			selectedTile = mousePosition;
@@ -78,7 +76,7 @@ public class IssueCommandState : ITurnState {
 		if (selectedUnit < 0) return;
 		int remainingActions = UnitManager.instance.GetRemainingActions(selectedUnit);
 
-		if (remainingActions > 0) {
+		if (remainingActions > 0 && !UnitManager.instance.IsLastActionFixing(selectedUnit)) {
 			WorldTile tile = TileManager.Instance.GetWorldTileAtPosition(selectedTile);
 
 			WorldTile selected = TileManager.Instance.GetWorldTileAtPosition(mousePosition);

@@ -19,11 +19,11 @@ public class GameManager : MonoBehaviour
 		if (Instance == null)
 		{
 			Instance = this;
+			DontDestroyOnLoad(gameObject);
 		}
 		else
 		{
-			Destroy(Instance);
-			Instance = this;
+			Destroy(this);
 		}
 	}
 
@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 	{
 		SceneManager.LoadSceneAsync(4).completed += (e) => {
 			GameNumber++;
+			Debug.Log(GameNumber);
 			TileManager.Instance.Generate(GameNumber + 3);
 			Vector3[] startPositions = TileManager.Instance.GetUnitStartPositions().ToArray();
 
@@ -70,11 +71,21 @@ public class GameManager : MonoBehaviour
 	public void EndGame()
 	{
 		GameNumber = 0;
+
+		aliveUnits = new bool[]
+		{
+			true, true, true, true
+		};
+
 		ShowStatScreen();
 	}
 
 	public bool IsUnitAvailable(int number) {
 		return aliveUnits[number - 1];
+	}
+
+	public void DisableUnit(int number) {
+		aliveUnits[number - 1] = false;
 	}
 
 }
