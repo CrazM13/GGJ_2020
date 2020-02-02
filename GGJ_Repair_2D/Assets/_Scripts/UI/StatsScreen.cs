@@ -19,11 +19,11 @@ public class StatsScreen : MonoBehaviour
 
     public void HandleMainMenuButton()
     {
-        SceneManager.LoadScene("MainMenu");
+		GameManager.Instance.QuitToMenu();
     }
 
     public void HandleContinueButton()
     {
-        SceneManager.LoadScene("UpgradeScreen");
+		GameManager.Instance.ShowUpgradeScreen();
     }
 }
