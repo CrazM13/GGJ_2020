@@ -54,9 +54,11 @@ public class Unit : MonoBehaviour {
         {
             case UnitAction.ActionType.FIX:
                 FindObjectOfType<GameUI>()?.AddHeroHUDRepair(unitNumber);
+                SoundSystem.Instance.PlayHeroConfirmSound(unitNumber);
                 break;
             case UnitAction.ActionType.MOVE:
                 FindObjectOfType<GameUI>()?.AddHeroHUDMove(unitNumber);
+                SoundSystem.Instance.PlayHeroMoveSound(unitNumber);
                 break;
         }
 
@@ -88,6 +90,26 @@ public class Unit : MonoBehaviour {
 	}
 
 	public void Kill() {
+		// TMP
+		gameObject.SetActive(false);
+
+        // Sounds
+        switch(unitNumber)
+        {
+            case 1:
+                SoundSystem.Instance.PlaySound(SoundEvents.H1Death);
+                break;
+            case 2:
+                SoundSystem.Instance.PlaySound(SoundEvents.H2Death);
+                break;
+            case 3:
+                SoundSystem.Instance.PlaySound(SoundEvents.H3Death);
+                break;
+            case 4:
+                SoundSystem.Instance.PlaySound(SoundEvents.H4Death);
+                break;
+        }
+
 		alive = false;
 		GameManager.Instance.DisableUnit(unitNumber);
 		GameCamera.instance.Shake(1);
@@ -111,6 +133,10 @@ public class Unit : MonoBehaviour {
 						SkillStorage.AddUpgradePoint();
 						TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
 					}
+                else
+                {
+                    SoundSystem.Instance.PlaySound(SoundEvents.DisasterRepairFailure);
+                }
 					Debug.Log("Attempted fix at " + Time.time);
 					actionTimer = 0f;
 					actions.RemoveAt(0);

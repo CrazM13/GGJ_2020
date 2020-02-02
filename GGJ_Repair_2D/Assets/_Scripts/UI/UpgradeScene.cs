@@ -28,13 +28,15 @@ public class UpgradeScene : MonoBehaviour
 
     public void HandleBackButton()
     {
-		SkillStorage.Cancel();
+        SoundSystem.Instance.PlaySound(SoundEvents.Select);
+        SkillStorage.Cancel();
 		GameManager.Instance.QuitToMenu();
     }
 
     public void HandleContinueButton()
     {
-		SkillStorage.Confirm();
+        SoundSystem.Instance.PlaySound(SoundEvents.Select);
+        SkillStorage.Confirm();
 		GameManager.Instance.StartGame();
     }
 }

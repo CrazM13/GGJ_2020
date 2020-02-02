@@ -45,17 +45,30 @@ public class IssueCommandState : ITurnState {
 	}
 
 	private void SelectUnit() {
-		if (selectedUnit > 0) {
+        int newSelect = TileManager.Instance.GetUnitOccupyingCell(mousePosition);
+
+        // check currently selected (if different)
+        if (selectedUnit > 0 && selectedUnit != newSelect)
+        {
 			TileManager.Instance.ToggleAdjacentHighlight(selectedTile, false);
+
+            // only play the sound if we are selecting nothing now
+            // (that way we dont play over the next dude being selected)
+            if (newSelect == 0)
+            {
+                SoundSystem.Instance.PlayHeroUnselectedSound(selectedUnit);
+            }
 		}
 
-		int newSelect = TileManager.Instance.GetUnitOccupyingCell(mousePosition);
+
 		if (newSelect > 0 && UnitManager.instance.IsUnitAlive(newSelect)) {
 			selectedUnit = newSelect;
 
 			selectedTile = mousePosition;
 
 			HighlightOptions();
+
+            SoundSystem.Instance.PlayHeroSelectedSound(selectedUnit);
 		}
 	}
 

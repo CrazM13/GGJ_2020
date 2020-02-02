@@ -68,5 +68,7 @@ public class CharacterUpgradePanel : MonoBehaviour
         {
 			SkillStorage.RemoveTmpPoint(characterID, stat);
 		}
+
+        SoundSystem.Instance.PlaySound(SoundEvents.Select);
     }
 }

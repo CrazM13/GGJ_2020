@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 				}
 			}
 
+            SoundSystem.Instance.PlaySound(SoundEvents.LevelStart);
 		};
 	}
 

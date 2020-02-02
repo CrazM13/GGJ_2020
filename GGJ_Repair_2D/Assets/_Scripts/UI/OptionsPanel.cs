@@ -23,16 +23,19 @@ public class OptionsPanel : MonoBehaviour
     {
         Screen.fullScreen = isOn;
 
-
+        SoundSystem.Instance.PlaySound(SoundEvents.Select);
     }
 
     public void OnVolumeSliderChanged(float newVal)
     {
         AudioListener.volume = newVal;
+        SoundSystem.Instance.audioSource.volume = newVal;
+        SoundSystem.Instance.PlaySound(SoundEvents.Select);
     }
 
     public void HandleCloseButton()
     {
+        SoundSystem.Instance.PlaySound(SoundEvents.Select);
         Panel.SetActive(false);
     }
 }
