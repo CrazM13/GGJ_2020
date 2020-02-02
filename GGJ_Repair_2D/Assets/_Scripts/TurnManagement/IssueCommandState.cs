@@ -9,6 +9,8 @@ public class IssueCommandState : ITurnState {
 	private Vector3 mousePosition;
 	private Vector3 selectedTile;
 
+	private GameUI ui = null;
+
 	public bool DidWin() {
 		return false;
 	}
@@ -19,6 +21,10 @@ public class IssueCommandState : ITurnState {
 
 	public void Start() {
 		UnitManager.instance.ResetRemainingActions();
+		if (!ui) {
+			ui = GameObject.FindObjectOfType<GameUI>();
+		}
+		ui.SetEndTurnInteractable(true);
 	}
 
 	public void Update() {
@@ -36,8 +42,10 @@ public class IssueCommandState : ITurnState {
 		if (selectedUnit > 0 && TileManager.Instance.GetTileDisasterType(mousePosition) != DisasterTypes.Count) {
 			float chance = UnitManager.instance.GetFixChance(selectedUnit, mousePosition);
 			FixPercentagePanel.instance.Show(Mathf.RoundToInt(chance * 100));
+			Cursor.SetCursor(GameManager.Instance.fixCursor, Vector2.zero, CursorMode.Auto);
 		} else {
 			FixPercentagePanel.instance.Hide();
+			Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 		}
 
 	}
@@ -144,6 +152,8 @@ public class IssueCommandState : ITurnState {
 	}
 
 	public void End() {
-		
+		if (!ui) {
+			ui = GameObject.FindObjectOfType<GameUI>();
+		}
 	}
 }

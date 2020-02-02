@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
 	public int GameNumber { get; private set; } = 0;
 
+	public Texture2D fixCursor;
+
 	private bool[] aliveUnits = new bool[]
 	{
 		true, true, true, true

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class GameUI : MonoBehaviour
 {
@@ -29,7 +30,9 @@ public class GameUI : MonoBehaviour
     public void HandleEndTurnButton()
     {
         FindObjectOfType<TurnManager>()?.HandleEndTurnButton();
-    }
+		SetEndTurnInteractable(false);
+
+	}
 
     public void HandleMainMenuButton()
     {
@@ -75,4 +78,10 @@ public class GameUI : MonoBehaviour
         ClearHeroHUDActions(3);
         ClearHeroHUDActions(4);
     }
+
+	public void SetEndTurnInteractable(bool interactable) {
+		endTurnButton.interactable = interactable;
+		if (!interactable) EventSystem.current.SetSelectedGameObject(null);
+	}
+
 }
