@@ -91,7 +91,7 @@ public class Unit : MonoBehaviour {
 
 	public void Kill() {
 		// TMP
-		gameObject.SetActive(false);
+		//gameObject.SetActive(false);
 
         // Sounds
         switch(unitNumber)
