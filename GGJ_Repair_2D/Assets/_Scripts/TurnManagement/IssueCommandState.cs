@@ -19,7 +19,6 @@ public class IssueCommandState : ITurnState {
 
 	public void Start() {
 		UnitManager.instance.ResetRemainingActions();
-		Debug.Log(TileManager.Instance.GetDisasterCount());
 	}
 
 	public void Update() {
@@ -52,7 +51,6 @@ public class IssueCommandState : ITurnState {
 
 		int newSelect = TileManager.Instance.GetUnitOccupyingCell(mousePosition);
 		if (newSelect > 0) {
-			Debug.Log(newSelect);
 			selectedUnit = newSelect;
 
 			selectedTile = mousePosition;
