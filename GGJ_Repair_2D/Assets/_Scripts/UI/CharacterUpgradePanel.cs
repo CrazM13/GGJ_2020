@@ -8,8 +8,14 @@ public class CharacterUpgradePanel : MonoBehaviour
     public int characterID;
 	public Stats stat;
     public Text nameLabel;
+    public Image portrait;
 
 	private Slider progress;
+
+    public Sprite hero1sprite;
+    public Sprite hero2sprite;
+    public Sprite hero3sprite;
+    public Sprite hero4sprite;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +27,25 @@ public class CharacterUpgradePanel : MonoBehaviour
         if(nameLabel)
         {
             nameLabel.text = SkillStorage.GetName(characterID);
+        }
+
+        if (portrait)
+        {
+            switch (characterID)
+            {
+                case 1:
+                    portrait.sprite = hero1sprite;
+                    break;
+                case 2:
+                    portrait.sprite = hero2sprite;
+                    break;
+                case 3:
+                    portrait.sprite = hero3sprite;
+                    break;
+                case 4:
+                    portrait.sprite = hero4sprite;
+                    break;
+            }
         }
 	}
 
