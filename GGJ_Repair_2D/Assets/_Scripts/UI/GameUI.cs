@@ -32,6 +32,7 @@ public class GameUI : MonoBehaviour
 
     public void HandleEndTurnButton()
     {
+        SoundSystem.Instance.PlaySound(SoundEvents.Select);
         FindObjectOfType<TurnManager>()?.HandleEndTurnButton();
 		SetEndTurnInteractable(false);
 
