@@ -214,6 +214,15 @@ public class TileManager : MonoBehaviour
 		if (tile != null)
 		{
 			tile.occupiedByUnit = unitNumber;
+			Debug.Log("Unit " + unitNumber + " moving to " + cellPos);
+
+			foreach (WorldTile worldTile in tiles)
+			{
+				if (tile != worldTile && worldTile.occupiedByUnit == unitNumber)
+				{
+					worldTile.occupiedByUnit = -1;
+				}
+			}
 		}
 	}
 
