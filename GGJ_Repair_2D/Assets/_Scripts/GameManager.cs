@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
 
 				if (!IsUnitAvailable(i + 1)) {
 					UnitManager.instance.Kill(i + 1);
+					TileManager.Instance.OnUnitKilled(i + 1);
 				}
 			}
 
