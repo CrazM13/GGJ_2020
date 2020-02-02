@@ -8,7 +8,7 @@ public class MusicPlayer : MonoBehaviour
     // I'm sortof a singleton
     public static MusicPlayer Current;
 
-    AudioSource audioSource;
+    public AudioSource audioSource;
 
     public List<AudioClip> menuMusic = new List<AudioClip>();
     public List<AudioClip> levelMusic = new List<AudioClip>();
@@ -42,26 +42,36 @@ public class MusicPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // time for another track?
+        if(audioSource && !audioSource.isPlaying)
+        {
+            CheckOrStartMusic();
+        }
     }
 
     void CheckOrStartMusic()
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene != null)
+        //Scene currentScene = SceneManager.GetActiveScene();
+        //if (currentScene != null)
+        //{
+        //string sceneNameLower = currentScene.name.ToLower();
+        //if (sceneNameLower.Equals("mainmenu") || sceneNameLower.Equals("levelselect") ||
+        //    sceneNameLower.Equals("intro")
+        //    )
+        //{
+        //    SetMusic(menuMusic);
+        //}
+        //else
+        //{
+        //    SetMusic(levelMusic);
+        //}
+
+        // just skip for GGJ2020
+        if (audioSource && !audioSource.isPlaying)
         {
-            string sceneNameLower = currentScene.name.ToLower();
-            if (sceneNameLower.Equals("mainmenu") || sceneNameLower.Equals("levelselect") ||
-                sceneNameLower.Equals("intro")
-                )
-            {
-                SetMusic(menuMusic);
-            }
-            else
-            {
-                SetMusic(levelMusic);
-            }
+            SetMusic(levelMusic);
         }
+        //}
     }
 
     public void OnLevelWasLoaded(int level)
@@ -71,7 +81,8 @@ public class MusicPlayer : MonoBehaviour
 
     void SetMusic(List<AudioClip> i_music)
     {
-        AudioClip newClip = i_music[Random.Range(0, i_music.Count)];
+        AudioClip newClip = null;
+        newClip = i_music[Random.Range(0, i_music.Count)];
 
         if (audioSource && newClip != audioSource.clip)
         {
@@ -115,11 +126,11 @@ public class MusicPlayer : MonoBehaviour
         audioSource.volume = 1;
     }
 
-    public void PlayButtonClickSound()
-    {
-        if(sfxSource && buttonClickSound)
-        {
-            sfxSource.PlayOneShot(buttonClickSound);
-        }
-    }
+    //public void PlayButtonClickSound()
+    //{
+    //    if(sfxSource && buttonClickSound)
+    //    {
+    //        sfxSource.PlayOneShot(buttonClickSound);
+    //    }
+    //}
 }
