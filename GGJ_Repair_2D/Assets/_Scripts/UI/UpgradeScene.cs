@@ -20,6 +20,10 @@ public class UpgradeScene : MonoBehaviour
     {
 		remainingPoints.text = SkillStorage.GetRemainingPoints().ToString();
 
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			SkillStorage.AddUpgradePoint();
+		}
+
 	}
 
     public void HandleBackButton()

@@ -54,7 +54,7 @@ public class SkillStorage : MonoBehaviour {
 	}
 
 	public static int GetLevel(int unitNumber, Stats stat) {
-		return stats[unitNumber - 1].GetLevel(stat);
+		return tmpStats[unitNumber - 1].GetLevel(stat);
 	}
 
 	public static Stats StatFromDisaster(DisasterTypes type) {

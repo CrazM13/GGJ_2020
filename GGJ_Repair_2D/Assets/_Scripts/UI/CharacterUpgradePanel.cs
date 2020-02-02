@@ -14,17 +14,16 @@ public class CharacterUpgradePanel : MonoBehaviour
     void Start()
     {
 		progress = GetComponentInChildren<Slider>();
-    }
+		progress.maxValue = 50;
+		progress.minValue = 0;
+	}
 
     // Update is called once per frame
     void Update()
     {
-		progress.value = (float)SkillStorage.GetLevel(characterID, stat) / 50f;
-
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			SkillStorage.AddUpgradePoint();
-		}
-
+		int level = SkillStorage.GetLevel(characterID, stat);
+		progress.value = level;
+		Debug.Log(level);
     }
 
     public void HandleStatChange(bool increase)
