@@ -110,4 +110,8 @@ public class Unit : MonoBehaviour {
 		startPosition = position;
 	}
 
+	public bool IsLastActionFixing() {
+		return actions.Count > 0 && actions[actions.Count - 1].GetActionType() == UnitAction.ActionType.FIX;
+	}
+
 }

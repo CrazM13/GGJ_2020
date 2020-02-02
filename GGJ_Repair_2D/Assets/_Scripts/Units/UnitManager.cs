@@ -57,6 +57,10 @@ public class UnitManager : MonoBehaviour {
 		units[unitNumber - 1]?.AddAction(action);
 	}
 
+	public bool IsLastActionFixing(int unitNumber) {
+		return units[unitNumber - 1].IsLastActionFixing();
+	}
+
 	public int GetRemainingActions(int unitNumber) {
 		return units[unitNumber - 1].GetRemainingActions();
 	}
