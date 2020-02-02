@@ -21,6 +21,7 @@ public class MainMenu : MonoBehaviour
     {
        
         CreateNewCampaign();
+        SoundSystem.Instance.PlaySound(SoundEvents.Select);
     }
 
     public void HandleOptionsButton()
@@ -30,6 +31,8 @@ public class MainMenu : MonoBehaviour
         {
             options.Panel.SetActive(true);
         }
+
+        SoundSystem.Instance.PlaySound(SoundEvents.Select);
     }
 
     public void HandleQuitButton()

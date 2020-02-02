@@ -277,12 +277,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 218468942}
   m_CullTransparentMesh: 0
---- !u!1 &294089783 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3414896297007621784, guid: be112b78a9c7ca045974fd7b9cf2529e,
-    type: 3}
-  m_PrefabInstance: {fileID: 5973492956233242423}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &682551581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1719,10 +1713,5 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6289493556431730839, guid: be112b78a9c7ca045974fd7b9cf2529e,
-        type: 3}
-      propertyPath: Panel
-      value: 
-      objectReference: {fileID: 294089783}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be112b78a9c7ca045974fd7b9cf2529e, type: 3}

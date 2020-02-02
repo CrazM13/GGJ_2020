@@ -289,6 +289,20 @@ public class TileManager : MonoBehaviour
 					tilemap.SetTile(spreadTile.cellLocation, disasterTiles[tile.type]);
 					numDisasters++;
 
+                    // Sound
+                    switch(tile.type)
+                    {
+                        case DisasterTypes.Disease:
+                            SoundSystem.Instance.PlaySound(SoundEvents.DiseaseCreated);
+                            break;
+                        case DisasterTypes.Fire:
+                            SoundSystem.Instance.PlaySound(SoundEvents.FireCreated);
+                            break;
+                        case DisasterTypes.Flood:
+                            SoundSystem.Instance.PlaySound(SoundEvents.FloodCreated);
+                            break;
+                    }
+
 					if (spreadTile.occupiedByUnit > -1)
 					{
 						UnitManager.instance.Kill(spreadTile.occupiedByUnit);

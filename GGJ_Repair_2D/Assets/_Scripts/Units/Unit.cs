@@ -51,9 +51,11 @@ public class Unit : MonoBehaviour {
         {
             case UnitAction.ActionType.FIX:
                 FindObjectOfType<GameUI>()?.AddHeroHUDRepair(unitNumber);
+                SoundSystem.Instance.PlayHeroConfirmSound(unitNumber);
                 break;
             case UnitAction.ActionType.MOVE:
                 FindObjectOfType<GameUI>()?.AddHeroHUDMove(unitNumber);
+                SoundSystem.Instance.PlayHeroMoveSound(unitNumber);
                 break;
         }
 
@@ -85,6 +87,24 @@ public class Unit : MonoBehaviour {
 	}
 
 	public void Kill() {
+
+        // Sounds
+        switch(unitNumber)
+        {
+            case 1:
+                SoundSystem.Instance.PlaySound(SoundEvents.H1Death);
+                break;
+            case 2:
+                SoundSystem.Instance.PlaySound(SoundEvents.H2Death);
+                break;
+            case 3:
+                SoundSystem.Instance.PlaySound(SoundEvents.H3Death);
+                break;
+            case 4:
+                SoundSystem.Instance.PlaySound(SoundEvents.H4Death);
+                break;
+        }
+
 		// TMP
 		gameObject.SetActive(false);
 	}
@@ -96,10 +116,15 @@ public class Unit : MonoBehaviour {
 		if (actions.Count > 0) {
 			if (actions[0].GetActionType() == UnitAction.ActionType.FIX) {
 				fixLocation = actions[0].GetActionTarget();
-				if (Random.value < GetFixChance(fixLocation)) {
+				if (Random.value < GetFixChance(fixLocation))
+                {
 					SkillStorage.AddUpgradePoint();
 					TileManager.Instance.ClearDisaster(actions[0].GetActionTarget());
 				}
+                else
+                {
+                    SoundSystem.Instance.PlaySound(SoundEvents.DisasterRepairFailure);
+                }
 				actions.RemoveAt(0);
 			}
 		}

@@ -208,7 +208,13 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Credits
 
-'
+    Joe
+
+    Jim
+
+    Kim
+
+    Will'
 --- !u!222 &65851959
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -700,11 +706,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1414305079086272218, guid: 48b459e087491e842aea226c0406e4c3,
-        type: 3}
-      propertyPath: m_Text
-      value: Main Menu
-      objectReference: {fileID: 0}
     - target: {fileID: 1414305077556699722, guid: 48b459e087491e842aea226c0406e4c3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -734,6 +735,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1414305079086272218, guid: 48b459e087491e842aea226c0406e4c3,
+        type: 3}
+      propertyPath: m_Text
+      value: Main Menu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48b459e087491e842aea226c0406e4c3, type: 3}
